@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Forms That Work</title>
+</head>
+<body>
+    <header>
+<h1>Building Forms that Work</h1>
+<nav>
+<a href="day1.html">Day 1</a> |
+<a href="day2.html">Day 2</a> |
+<a href="day3.html">Day 3</a> |
+<a href="day4.html">Day 4</a>
+
+</nav>
+    </header>
+    
+<main>
+    <h2>Create Account</h2>
+    <p>This registration form is designed to collect user information in an organised way while allowing me practice HTML forms and input handling.</p>
+<form>
+<div>
+    <label for="firstname">First name:</label>
+<input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required>
+</div>
+<br>
+<div>
+<label for="lastname">Last Name:</label>
+<input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required>
+</div>
+<br>
+<div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="e.g johndoe@email.com" required>
+</div>
+<br>
+<div>
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone" placeholder="+1233456789" required>
+</div>
+
+<br>
+<div>
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" maxlength="10" required>
+</div>
+
+<br>
+<div>
+    <label for="confirmpassword">Confirm Password:</label>
+    <input type="password" id="confirmpassword" name="confirmpassword" maxlength="10" required>
+</div>
+<br>
+<div>
+    <label for="gender">Gender:</label>
+    <label for="male">Male</label>
+    <input type="radio" id="male" value="male" name="gender">
+
+<label for="female">Female</label>
+<input type="radio" id="female" value="female" name="gender">
+
+<label for="prefernottosay">Prefer not to say</label>
+<input type="radio" id="prefernottosay" value="prefernottosay" name="gender" required>
+</div>
+
+<br>
+<div>
+    <label for="country">Country:</label>
+    <select id="country" name="country" required>
+        <option>Nigeria</option>
+        <option>Kenya</option>
+        <option>Ghana</option>
+        <option>Liberia</option>
+        <option>UK</option>
+        <option>USA</option>
+
+    </select>
+</div>
+<br>
+<div>
+    <label for="hobbies">Hobbies:</label>
+
+    <label for="coding">Coding</label>
+    <input type="checkbox" id="coding" name="coding" value="coding">
+
+    <label for="reading">Reading</label>
+    <input type="checkbox" id="reading" name="reading" value="reading">
+
+    <label for="sports">Sports</label>
+    <input type="checkbox" id="sports" name="sports" value="sports">
+
+    <label for="writing">Writing</label>
+    <input type="checkbox" id="writing" name="writing" value="writing">
+</div>
+
+<br>
+<div>
+    <label for="agreement">I agree to the terms and conditions.</label>
+    <input type="checkbox" id="agreement" name="agreement"  required>
+</div>
+
+<br>
+<div>
+    <button type="submit">Create Account</button>
+</div>
+
+</form>
+
+</main>
+
+<footer>
+<p>&copy; 2026 Chukwuma Arinze Solomon</p>
+<a href="https://x.com/still_moves?s=21">Follow me on X</a> 
+
+    
+</footer>
+</body>
+</html>

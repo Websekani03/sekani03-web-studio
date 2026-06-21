@@ -1,0 +1,66 @@
+body{background-color: cornflowerblue;
+}
+
+
+#home{margin-left: 20px;
+border: #f8f9fa solid;
+padding: 10px;
+}
+
+h1{color: hsl(240, 94%, 7%);
+    border: 1px #f8f9fa outset;
+    background: aquamarine;
+width: fit-content;
+padding: 20px;
+text-align: center;
+margin:auto;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+h2 {
+    color: aquamarine;
+    border: #f8f9fa solid;
+    width: fit-content;
+    padding: 5px;
+}
+
+h3{color: #FFFED1;
+
+}
+
+p{color: #f8f9fa;
+line-height: 1.6;
+font-weight: 400;
+}
+
+a{color:midnightblue;
+font-style: italic;
+margin: 10px;
+padding: 10px;
+font-weight: bolder;
+}
+
+li {color:#f8f9fa;
+    line-height: 1.6;
+    font-weight: bold;
+}
+
+footer
+p{color: slategray;
+}
+
+#aboutme{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border: 1px #f8f9fa solid;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#skills{ margin-left:15px;
+    border: 1px #f8f9fa solid;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+
+}

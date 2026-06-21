@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sekani Digital Studio — Creative Agency & Web Solutions</title>
+    <link rel="stylesheet" href="css/day16.css">
+</head>
+
+<body>
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#home" class="logo">
+                <span>Sekani</span>Studio
+            </a>
+
+            <button class="nav-toggle" aria-label="Toggle Menu" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#oservice">Services</a></li>
+                <li><a href="#ourwork">Featured Works</a></li>
+                <li><a href="#whychooseus">Why Choose Us</a></li>
+                <li><a href="#statistic">Statistics</a></li>
+                <li><a href="#testimonials">Feedback</a></li>
+                <li><a href="#contacts">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section" id="home">
+        <div class="hero-bg-glow"></div>
+        <h1 class="reveal active">Creative Solutions For Modern Businesses</h1>
+        <p class="reveal active">We build premium, responsive websites and create cutting-edge digital experiences
+            designed to convert, engage, and elevate your online presence.</p>
+        <div class="hero-buttons reveal active">
+            <a href="#contacts" class="btn btn-primary">Start Your Project</a>
+            <a href="#ourwork" class="btn btn-secondary">View Our Work</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Services Section -->
+        <section class="services-section container" id="oservice">
+            <div class="section-header reveal">
+                <h2>Our <span>Services</span></h2>
+                <p>We provide full-scale frontend development, branding, and redesign solutions tailored to your
+                    business needs.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <!-- Web Design SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <h3>Web Design</h3>
+                    <p>Clean and highly responsive websites built to establish a stunning and professional presence
+                        across all user devices.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <!-- Frontend Dev SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Frontend Development</h3>
+                    <p>Structured, fast, and scalable frontend codebases built using the absolute best HTML5, CSS3, and
+                        JavaScript practices.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <!-- Landing Page SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="2"></circle>
+                        </svg>
+                    </div>
+                    <h3>Landing Pages</h3>
+                    <p>High-converting landing pages crafted meticulously to showcase products, services, and optimize
+                        client acquisitions.</p>
+                </div>
+
+                <div class="service-card reveal">
+                    <div class="service-icon">
+                        <!-- Website Redesign SVG -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                        </svg>
+                    </div>
+                    <h3>Website Redesign</h3>
+                    <p>Revamp outdated systems into modern, blazing-fast user experiences with clean layout structure
+                        and visual logic.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Works Section -->
+        <section class="works-section container" id="ourwork">
+            <div class="section-header reveal">
+                <h2>Featured <span>Works</span></h2>
+                <p>Take a look at the projects marking our frontend development journey. Each represents custom
+                    challenges solved and modern layouts crafted.</p>
+            </div>
+
+            <div class="works-grid">
+                <!-- Project 1: Developer Portfolio -->
+                <div class="work-card reveal">
+                    <div class="work-card-media">
+                        <!-- Clean Vector illustration/mockup of Portfolio -->
+                        <svg width="100%" height="100%" viewBox="0 0 300 170" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="170" fill="#0c1222" />
+                            <!-- Header -->
+                            <rect x="15" y="15" width="40" height="8" rx="2" fill="#6366f1" fill-opacity="0.6" />
+                            <rect x="230" y="15" width="55" height="8" rx="2" fill="#3b82f6" fill-opacity="0.3" />
+                            <!-- Profile Hero -->
+                            <circle cx="60" cy="80" r="25" fill="#00d2ff" fill-opacity="0.2" stroke="#00d2ff"
+                                stroke-width="1.5" />
+                            <rect x="100" y="65" width="120" height="10" rx="3" fill="#f8f9fa" />
+                            <rect x="100" y="85" width="160" height="6" rx="2" fill="#9ca3af" />
+                            <rect x="100" y="97" width="90" height="6" rx="2" fill="#9ca3af" />
+                            <!-- Grid blocks -->
+                            <rect x="25" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                stroke-opacity="0.4" />
+                            <rect x="115" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                stroke-opacity="0.4" />
+                            <rect x="205" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                stroke-opacity="0.4" />
+                        </svg>
+                        <div class="work-card-overlay">
+                            <button class="btn btn-primary preview-project-btn" data-project="day13.html"
+                                data-title="Developer Portfolio">Live Preview</button>
+                        </div>
+                    </div>
+                    <div class="work-card-content">
+                        <h3>Developer Portfolio</h3>
+                        <p>A responsive developer showcase displaying frontend skill sets, nested card structures, and a
+                            organized coding timeline.</p>
+                        <div class="work-badges">
+                            <span class="work-badge">HTML5</span>
+                            <span class="work-badge">CSS Grid</span>
+                            <span class="work-badge">Responsive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Contact Form -->
+                <div class="work-card reveal">
+                    <div class="work-card-media">
+                        <!-- Contact form visual mockup SVG -->
+                        <svg width="100%" height="100%" viewBox="0 0 300 170" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="170" fill="#0c1222" />
+                            <!-- Form Box -->
+                            <rect x="60" y="20" width="180" height="130" rx="8" fill="#131b2e" stroke="#00d2ff"
+                                stroke-opacity="0.4" />
+                            <!-- Title -->
+                            <rect x="80" y="35" width="60" height="8" rx="2" fill="#f8f9fa" />
+                            <!-- Form inputs -->
+                            <rect x="80" y="55" width="140" height="14" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                stroke-opacity="0.3" />
+                            <rect x="80" y="77" width="140" height="14" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                stroke-opacity="0.3" />
+                            <rect x="80" y="99" width="140" height="24" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                stroke-opacity="0.3" />
+                            <!-- Button -->
+                            <rect x="120" y="130" width="60" height="10" rx="3" fill="#ff9f1c" />
+                        </svg>
+                        <div class="work-card-overlay">
+                            <button class="btn btn-primary preview-project-btn" data-project="day12.html"
+                                data-title="Modern Contact Form">Live Preview</button>
+                        </div>
+                    </div>
+                    <div class="work-card-content">
+                        <h3>Modern Contact Form</h3>
+                        <p>A high-end contact screen featuring customized input elements, focus states, interactive
+                            hover responses, and smooth UI feedback.</p>
+                        <div class="work-badges">
+                            <span class="work-badge">Transitions</span>
+                            <span class="work-badge">Forms</span>
+                            <span class="work-badge">UI States</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Digital Studio Website -->
+                <div class="work-card reveal">
+                    <div class="work-card-media">
+                        <!-- Digital studio visual mockup SVG -->
+                        <svg width="100%" height="100%" viewBox="0 0 300 170" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="170" fill="#0c1222" />
+                            <!-- Split blocks -->
+                            <rect x="20" y="30" width="120" height="14" rx="3" fill="#6366f1" fill-opacity="0.7" />
+                            <rect x="20" y="52" width="110" height="8" rx="2" fill="#9ca3af" />
+                            <rect x="20" y="66" width="90" height="8" rx="2" fill="#9ca3af" />
+                            <rect x="20" y="85" width="50" height="14" rx="7" fill="#00d2ff" />
+                            <!-- Image block representation -->
+                            <rect x="160" y="30" width="120" height="110" rx="8" fill="#1e293b" stroke="#3b82f6"
+                                stroke-opacity="0.3" />
+                            <circle cx="220" cy="85" r="20" fill="#3b82f6" fill-opacity="0.2" />
+                            <path d="M180 120 L210 90 L240 115 L260 100 L280 125" stroke="#00d2ff" stroke-width="2"
+                                stroke-linecap="round" />
+                        </svg>
+                        <div class="work-card-overlay">
+                            <button class="btn btn-primary preview-project-btn" data-project="day14.html"
+                                data-title="Digital Studio Website">Live Preview</button>
+                        </div>
+                    </div>
+                    <div class="work-card-content">
+                        <h3>Digital Studio Website</h3>
+                        <p>A responsive studio landing page built to present core services, showcase professional
+                            branding, and scale typography models.</p>
+                        <div class="work-badges">
+                            <span class="work-badge">Branding</span>
+                            <span class="work-badge">CSS Flex</span>
+                            <span class="work-badge">Scale</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Studio Website 2.0 -->
+                <div class="work-card reveal">
+                    <div class="work-card-media">
+                        <!-- Studio 2.0 visual mockup SVG -->
+                        <svg width="100%" height="100%" viewBox="0 0 300 170" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect width="300" height="170" fill="#0c1222" />
+                            <!-- Top stats header -->
+                            <rect x="20" y="15" width="260" height="30" rx="6" fill="#131b2e" stroke="#3b82f6"
+                                stroke-opacity="0.3" />
+                            <circle cx="40" cy="30" r="6" fill="#ff9f1c" />
+                            <rect x="55" y="27" width="50" height="6" rx="2" fill="#f8f9fa" />
+                            <!-- Grid blocks layout -->
+                            <rect x="20" y="55" width="80" height="95" rx="6" fill="#1e293b" />
+                            <rect x="110" y="55" width="80" height="95" rx="6" fill="#1e293b" />
+                            <rect x="200" y="55" width="80" height="95" rx="6" fill="#1e293b" />
+                            <!-- Highlights inside cards -->
+                            <rect x="30" y="70" width="40" height="6" rx="2" fill="#00d2ff" />
+                            <rect x="120" y="70" width="40" height="6" rx="2" fill="#00d2ff" />
+                            <rect x="210" y="70" width="40" height="6" rx="2" fill="#00d2ff" />
+                        </svg>
+                        <div class="work-card-overlay">
+                            <button class="btn btn-primary preview-project-btn" data-project="day15.html"
+                                data-title="Studio Website 2.0">Live Preview</button>
+                        </div>
+                    </div>
+                    <div class="work-card-content">
+                        <h3>Studio Website 2.0</h3>
+                        <p>An upgraded layout integrating custom CSS grid, absolute CTA placement indicators, and highly
+                            reusable design assets.</p>
+                        <div class="work-badges">
+                            <span class="work-badge">CSS Grid</span>
+                            <span class="work-badge">Grid Layouts</span>
+                            <span class="work-badge">Refactored</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="choose-section container" id="whychooseus">
+            <div class="section-header reveal">
+                <h2>Why Choose <span>Us</span></h2>
+                <p>We combine design structure and logical code execution to deliver highly effective business websites.
+                </p>
+            </div>
+
+            <div class="choose-grid">
+                <div class="choose-card reveal">
+                    <div class="choose-num">01</div>
+                    <div class="choose-card-info">
+                        <h3>Reliable Structure</h3>
+                        <p>Clean, semantic, and highly organized HTML layout elements built for seamless navigation.</p>
+                    </div>
+                </div>
+
+                <div class="choose-card reveal">
+                    <div class="choose-num">02</div>
+                    <div class="choose-card-info">
+                        <h3>Responsive Design</h3>
+                        <p>Websites designed to adapt and function seamlessly across phones, tablets, and wide monitors.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="choose-card reveal">
+                    <div class="choose-num">03</div>
+                    <div class="choose-card-info">
+                        <h3>Modern Styling</h3>
+                        <p>Stunning typography selections, clean grid layouts, and interactive animations tailored to
+                            impress.</p>
+                    </div>
+                </div>
+
+                <div class="choose-card reveal">
+                    <div class="choose-num">04</div>
+                    <div class="choose-card-info">
+                        <h3>Growth Focused</h3>
+                        <p>Web builds focused entirely on satisfying specific business goals and driving customer
+                            actions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats-section container-fluid" id="statistic">
+            <div class="container stats-grid">
+                <div class="stat-item reveal">
+                    <h3 class="counter" data-target="15">0</h3>
+                    <p>Projects Completed</p>
+                </div>
+
+                <div class="stat-item reveal">
+                    <h3 class="counter" data-target="100">0</h3>
+                    <p>Learning Commitment %</p>
+                </div>
+
+                <div class="stat-item reveal">
+                    <h3 class="counter" data-target="24">0</h3>
+                    <p>Support (Hours / Day)</p>
+                </div>
+
+                <div class="stat-item reveal">
+                    <h3 class="counter" data-target="100">0</h3>
+                    <p>Responsive Designs %</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Client Feedback Section -->
+        <section class="feedback-section container" id="testimonials">
+            <div class="section-header reveal">
+                <h2>Client <span>Feedback</span></h2>
+                <p>Here is what our clients and partners say about our design responsiveness and clean frontend
+                    execution.</p>
+            </div>
+
+            <div class="feedback-slider-container reveal">
+                <div class="feedback-wrapper" id="feedback-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="feedback-slide">
+                        <div class="feedback-card">
+                            <div class="feedback-quote-icon">“</div>
+                            <p>The website layout and structure are clean, highly professional, and extremely easy for
+                                our users to navigate. Very pleased with the custom adjustments!</p>
+                            <div class="feedback-author">David Johnson</div>
+                            <div class="feedback-title">Technical Project Lead</div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="feedback-slide">
+                        <div class="feedback-card">
+                            <div class="feedback-quote-icon">“</div>
+                            <p>The responsive design worked beautifully across multiple test devices and maintained
+                                excellent visual consistency. Highly detailed spacing rules!</p>
+                            <div class="feedback-author">Sophia Carter</div>
+                            <div class="feedback-title">Product Manager, Venture Tech</div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="feedback-slide">
+                        <div class="feedback-card">
+                            <div class="feedback-quote-icon">“</div>
+                            <p>Excellent communication and execution. The resulting project displays high attention to
+                                modern design structures and responsive styling principles.</p>
+                            <div class="feedback-author">Michael Brown</div>
+                            <div class="feedback-title">Creative Director, Alpha Media</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slider-controls">
+                    <button class="slider-arrow" id="prev-slide" aria-label="Previous Testimonial">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </button>
+                    <div class="slider-dots" id="slider-dots"></div>
+                    <button class="slider-arrow" id="next-slide" aria-label="Next Testimonial">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section container" id="contacts">
+            <div class="section-header reveal">
+                <h2>Contact <span>Us</span></h2>
+                <p>Have an interesting project, custom business requirement, or design query? Fill out the form or reach
+                    out directly.</p>
+            </div>
+
+            <div class="contact-section-split reveal">
+                <!-- Info Panel -->
+                <div class="contact-info-panel">
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="contact-item-details">
+                            <h4>Email Address</h4>
+                            <p><a href="mailto:hello@sekanistudio.com">hello@sekanistudio.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                            </svg>
+                        </div>
+                        <div class="contact-item-details">
+                            <h4>Phone Support</h4>
+                            <p><a href="tel:+2349154516012">+2349154516012</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div class="contact-item-details">
+                            <h4>Studio Location</h4>
+                            <p>Lagos, Nigeria</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4
+                            style="font-family: 'Outfit', sans-serif; margin-bottom: 15px; font-size: 1.1rem; font-weight: 600;">
+                            Connect With Us</h4>
+                        <div class="social-links-grid">
+                            <a href="#" class="social-link-item" aria-label="GitHub">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link-item" aria-label="LinkedIn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                    </path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link-item" aria-label="Twitter">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                    </path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Panel -->
+                <div class="contact-form-panel">
+                    <form id="contact-form" class="my-form">
+                        <div class="form-group">
+                            <input type="text" id="fname" name="fname" placeholder=" " required>
+                            <label for="fname">Full Name</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder=" " required>
+                            <label for="email">Email Address</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="bname" name="bname" placeholder=" ">
+                            <label for="bname">Business Name</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select name="nservice" id="nservice" required>
+                                <option value="" disabled selected></option>
+                                <option value="Website Design">Website Design</option>
+                                <option value="Frontend Development">Frontend Development</option>
+                                <option value="Landing Page">Landing Page</option>
+                                <option value="UI Styling">UI Styling</option>
+                                <option value="Consultations">Consultations</option>
+                            </select>
+                            <label for="nservice">Service Needed</label>
+                        </div>
+
+                        <div class="form-group">
+                            <select name="budget" id="budget" required>
+                                <option value="" disabled selected></option>
+                                <option value="Small Project">Small Project</option>
+                                <option value="Medium Project">Medium Project</option>
+                                <option value="Large Project">Large Project</option>
+                            </select>
+                            <label for="budget">Project Budget</label>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="desc" id="desc" placeholder=" " required></textarea>
+                            <label for="desc">Short description of project</label>
+                        </div>
+
+                        <div class="agreement-group">
+                            <input type="checkbox" id="agreement" name="agreement" required>
+                            <label for="agreement">I agree to the <a href="terms.html" target="_blank">Terms &
+                                    Conditions</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label>
+                        </div>
+
+                        <div class="form-buttons">
+                            <button type="submit" id="b1" class="btn btn-primary">Send Inquiry</button>
+                            <button type="button" id="b2" class="btn btn-secondary">Book Consultation</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <a href="#home" class="footer-logo">
+                <span>Sekani</span>Studio
+            </a>
+
+            <ul class="footer-links">
+                <li><a href="terms.html" target="_blank">Terms & Conditions</a></li>
+                <li><a href="privacy.html" target="_blank">Privacy Policy</a></li>
+            </ul>
+
+            <p class="footer-desc">Building highly responsive, modern digital experiences through clean frontend
+                structures, beautiful UI styles, and logical coding principles.</p>
+            <p class="footer-copy">&copy; 2026 Sekani Digital Studio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Project Preview Modal -->
+    <div class="project-modal" id="project-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-window-title">
+                    <span class="modal-dot red"></span>
+                    <span class="modal-dot yellow"></span>
+                    <span class="modal-dot green"></span>
+                    <span id="modal-project-title" style="margin-left: 10px;">Project Preview</span>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-action-btn modal-close-btn" id="modal-close" aria-label="Close Preview">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <iframe class="modal-iframe" id="modal-iframe" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Notification Toast -->
+    <div class="toast-notification" id="toast-notification">
+        <div class="toast-icon">✓</div>
+        <div class="toast-content">
+            <h5 id="toast-title">Submission Successful</h5>
+            <p id="toast-message">We have received your inquiry. Our team will contact you shortly!</p>
+        </div>
+    </div>
+
+    <!-- Custom Logic Script -->
+    <script src="js/day16.js"></script>
+</body>
+
+</html>

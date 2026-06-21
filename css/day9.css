@@ -1,0 +1,110 @@
+body{ background-color: #bdddfc;
+color: #001f3f;
+} 
+
+#home{margin-left: 20px;
+border: #f8f9fa solid;
+margin-bottom: 10px;
+padding: 10px;
+}
+
+h1{color: hsl(240, 94%, 7%);
+    border: 1px #f8f9fa outset;
+    border-radius: 20px;
+    background:#f8f9fa;
+width:fit-content;
+text-align: center;
+padding: 10px;
+font-family: Arial, Helvetica, sans-serif;
+margin:auto;
+}
+
+#p1{font-weight: bold;}
+
+a{ margin-left: 10px;
+    padding: 10px;
+    margin-top: 10px;
+color: #2e5bff;
+font-weight: bolder;
+}
+
+.card{ padding: 20px;
+    border: #bdddfc solid;
+background-color: #f4f9ff;
+border-radius: 10px;
+margin-bottom: 20px;
+}
+
+#skills{border-radius: 10px;
+border: #bdddfc solid;}
+
+#myjourney{border-radius: 10px;
+border:#bdddfc solid}
+
+h2{color: #384959;
+    background-color: #bdddfc;
+    border: #f8f9fa solid;
+    width: fit-content;
+    padding: 10px;
+border-radius: 10px;
+}
+
+h3{ background: #384959;
+    color: #f8f9fa;
+border: #f8f9fa solid;
+width: fit-content;
+padding:10px;
+border-radius: 10px;
+}
+
+.table{background-color: darkblue;
+    border-radius: 10px;
+}
+
+.table th { background-color: lightblue ;
+color:#001f3f;
+padding: 10px;
+font-weight: bolder;
+}
+
+.table td{ background-color: ghostwhite;
+padding: 10px;}
+
+
+td:nth-child(2){background-color: #a2c2e0;
+color: #001f3f;
+font-weight: bolder;
+}
+
+footer{ background-color:#f8f9fa;
+    border-radius: 20px;
+    padding: 10px;
+    text-align: center;
+    margin:20px
+}
+
+.form{font-weight: bold;
+border: #f8f9fa solid;
+border-radius: 20px;
+width: fit-content;
+padding: 20px;
+text-align: center;
+background-color: #88bdf2;
+margin: auto;}
+
+#contact{border: #f8f9fa solid;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 20px;
+}
+
+#contactus{ border: #384959 solid;
+    border-radius: 20px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin-left: 10px;
+    width: fit-content;
+    margin:auto;
+    margin-top: 10px;
+margin-bottom: 10px;
+}

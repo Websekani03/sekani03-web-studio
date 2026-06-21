@@ -1,0 +1,150 @@
+body{background-color: #bdddfc;
+    color: inherit;
+}
+
+h1{background-color:#f8f9fa;
+    border:#6a89a7 solid;
+border-radius: 20px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+width: fit-content;
+color: #6a89a7;
+margin: auto;
+padding: 10px;
+}
+
+a{color: #2e5bff;
+margin-left: 20px;
+padding: 10px;
+margin-top: 20px;   
+font-weight: bolder;
+font-style: italic;
+}
+
+a:hover{color: gold;
+font-weight: bolder;
+}
+
+a:visited{color: blueviolet;
+    font-weight: lighter;
+
+}
+
+
+#p1{font-weight: bold;
+    font-family: cursive;
+}
+
+.container{
+    padding: 10px;
+    margin: 0 auto 15px auto;
+    justify-content: center;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-radius: 20px;
+}
+
+
+.skillcard-container{display: flex;
+    padding: 10px;
+    margin: 0 auto 15px auto;
+    justify-content: center;
+    text-align: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #f8f9fa;
+    border-radius: 20px;
+    gap: 20px;
+}
+
+.skill-card{display: flex;
+padding: 10px;
+min-width: 250px;
+max-width: 350;
+border-radius: 20px;
+flex-direction: column;
+flex: 1;
+border: #6a89a7 solid 2px;
+gap: 20px;
+background-color: #bdddfc;
+}
+
+
+.journey{display: flex;
+gap: 20px;
+text-align: center;
+flex-wrap: wrap;
+}
+
+.journey-card{display: flex;
+    padding: 10px;
+    margin: 0 auto 15px auto;
+flex: 1;
+flex-direction: column;
+text-align: center;
+flex-wrap: wrap;
+}
+
+h2{background-color: #bdddfc;
+    text-align: center;
+    color:midnightblue;
+    font-weight: bolder;
+    width: fit-content;
+margin: auto;
+padding: 10px;
+border-radius: 20px;
+}
+
+h3{background-color:aquamarine;
+    width: fit-content;
+    padding: 10px;
+margin: auto;
+text-align: center;
+border-radius: 20px;
+border: #6a89a7 solid;
+}
+
+.responsive-goals{background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 20px;
+    margin-left: 10px;
+    text-align: center;
+    color:midnightblue;
+}
+
+.contactus{background-color: #f8f9fa;
+    color: midnightblue;
+    border-radius: 20px;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+form{font-weight: bolder;
+    border: #6a89a7 solid;
+    border-radius: 20px;
+    background-color:#bdddfc;
+    padding: 10px;
+width: fit-content;
+margin: auto;
+}
+
+form button{color: midnightblue;
+    font-weight: bolder;
+background-color: aqua;
+}
+
+form button:hover{color:gold;
+    font-weight: bolder;
+
+}
+
+.journey-card a:hover{ color: gold;}
+
+
+footer{background-color: #6a89a7;
+font-weight: lighter;
+color: #f8f9fa;
+padding: 10px;
+margin: auto;
+text-align: center;
+}
