@@ -239,76 +239,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 8. Contact Form Handling & Toast Alert Notification
+    // 8. Contact Form — handled by backend/mailer.js (EmailJS)
+    //    The real email sending is wired up in backend/mailer.js.
+    //    Below: only the "Book Consultation" button UI logic remains.
     // -------------------------------------------------------------------------
-    const contactForm = document.getElementById('contact-form');
-    const toast = document.getElementById('toast-notification');
-    const toastTitle = document.getElementById('toast-title');
-    const toastMsg = document.getElementById('toast-message');
-    const sendInquiryBtn = document.getElementById('b1');
     const bookConsultBtn = document.getElementById('b2');
 
-    const showToast = (title, message, isSuccess = true) => {
-        toastTitle.innerText = title;
-        toastMsg.innerText = message;
-        toast.style.borderColor = isSuccess ? '#10b981' : '#f59e0b';
-        const icon = toast.querySelector('.toast-icon');
-        icon.innerText = isSuccess ? '✓' : 'ℹ';
-        icon.style.color = isSuccess ? '#10b981' : '#f59e0b';
-        icon.style.backgroundColor = isSuccess ? 'rgba(16, 115, 81, 0.15)' : 'rgba(245, 158, 11, 0.15)';
-        
-        toast.classList.add('active');
-        setTimeout(() => {
-            toast.classList.remove('active');
-        }, 5000);
-    };
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const fullName = document.getElementById('fname').value.trim();
-            const serviceSelected = document.getElementById('nservice').value;
-
-            // Simple validation UI effect
-            sendInquiryBtn.disabled = true;
-            const originalText = sendInquiryBtn.innerText;
-            sendInquiryBtn.innerText = 'Sending Inquiry...';
-
-            // Simulate form submission process
-            setTimeout(() => {
-                showToast(
-                    'Inquiry Sent!', 
-                    `Thank you, ${fullName}! Your inquiry about "${serviceSelected}" has been successfully recorded.`,
-                    true
-                );
-                
-                contactForm.reset();
-                
-                // Reset select field floating labels
-                document.querySelectorAll('.form-group select').forEach(sel => {
-                    sel.value = '';
-                });
-
-                sendInquiryBtn.disabled = false;
-                sendInquiryBtn.innerText = originalText;
-            }, 1800);
-        });
-    }
-
-    // Direct booking button handling
     if (bookConsultBtn) {
         bookConsultBtn.addEventListener('click', () => {
             const fullNameInput = document.getElementById('fname');
             const fullName = fullNameInput.value.trim();
-            
+
             if (!fullName) {
-                // Shake or alert to enter name first
-                showToast(
-                    'A Name is Required', 
-                    'Please fill out your Full Name in the form before booking a consultation.',
-                    false
-                );
+                // Reuse the mailer toast if available, otherwise alert
+                if (typeof showMailerToast === 'function') {
+                    showMailerToast('error', 'Name Required', 'Please fill in your Full Name before booking a consultation.');
+                } else {
+                    alert('Please fill in your Full Name before booking.');
+                }
                 fullNameInput.focus();
                 return;
             }
@@ -318,11 +266,9 @@ document.addEventListener('DOMContentLoaded', () => {
             bookConsultBtn.innerText = 'Booking Slot...';
 
             setTimeout(() => {
-                showToast(
-                    'Consultation Booked!', 
-                    `Excellent choice, ${fullName}! We've saved a tentative slot for you. A scheduling email has been dispatched.`,
-                    true
-                );
+                if (typeof showMailerToast === 'function') {
+                    showMailerToast('success', 'Consultation Booked!', `Great, ${fullName}! A scheduling email has been dispatched to our team.`);
+                }
                 bookConsultBtn.disabled = false;
                 bookConsultBtn.innerText = originalText;
             }, 1500);
