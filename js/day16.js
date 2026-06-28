@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 const id = entry.target.getAttribute('id');
                 if (!id) return;
-                
+
                 navLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${id}`) {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const duration = 2000; // 2 seconds animation
             const stepTime = Math.max(Math.floor(duration / target), 15);
             let current = 0;
-            
+
             const timer = setInterval(() => {
                 current += Math.ceil(target / (duration / stepTime));
                 if (current >= target) {
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('prev-slide');
     const nextBtn = document.getElementById('next-slide');
     const dotsContainer = document.getElementById('slider-dots');
-    
+
     let currentSlide = 0;
     const totalSlides = slides.length;
     let autoSlideInterval;
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dot.addEventListener('click', () => goToSlide(i));
             dotsContainer.appendChild(dot);
         }
-        
+
         const dots = document.querySelectorAll('.slider-dot');
 
         const updateDots = () => {
@@ -239,11 +239,89 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 8. Contact Form — handled by backend/mailer.js (EmailJS)
-    //    The real email sending is wired up in backend/mailer.js.
-    //    Below: only the "Book Consultation" button UI logic remains.
+    // 8. Toast Alert Notification
     // -------------------------------------------------------------------------
+    function showMailerToast(type, title, message) {
+        const toast = document.getElementById("toast-notification");
+        const icon = toast ? toast.querySelector(".toast-icon") : null;
+        const toastTitle = document.getElementById("toast-title");
+        const toastMsg = document.getElementById("toast-message");
+
+        if (!toast || !toastTitle || !toastMsg) return;
+
+        toastTitle.textContent = title;
+        toastMsg.textContent = message;
+
+        if (type === "error") {
+            toast.style.borderColor = "#ef4444";
+            if (icon) {
+                icon.style.background = "linear-gradient(135deg, #ef4444, #dc2626)";
+                icon.textContent = "!";
+            }
+        } else {
+            toast.style.borderColor = "";
+            if (icon) {
+                icon.style.background = "";
+                icon.textContent = "\u2713";
+            }
+        }
+
+        toast.classList.add("active", "show");
+
+        clearTimeout(toast._hideTimer);
+        toast._hideTimer = setTimeout(() => {
+            toast.classList.remove("active", "show");
+        }, 5000);
+    }
+
+    // -------------------------------------------------------------------------
+    // 9. Contact Form & Consultation Booking Handlers (EmailJS)
+    // -------------------------------------------------------------------------
+    const contactForm = document.getElementById('contact-form');
+    const sendInquiryBtn = document.getElementById('b1');
     const bookConsultBtn = document.getElementById('b2');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fname').value.trim();
+            const serviceSelected = document.getElementById('nservice').value;
+
+            // Simple validation UI effect
+            sendInquiryBtn.disabled = true;
+            const originalText = sendInquiryBtn.innerText;
+            sendInquiryBtn.innerText = 'Sending Inquiry...';
+
+            // Send form using EmailJS
+            emailjs.sendForm('service_o67d551', 'template_29sxvvq', contactForm)
+                .then(() => {
+                    showMailerToast(
+                        'success',
+                        'Inquiry Sent!',
+                        `Thank you, ${fullName}! Your inquiry about "${serviceSelected}" has been successfully recorded.`
+                    );
+                    contactForm.reset();
+
+                    // Reset select field floating labels
+                    document.querySelectorAll('.form-group select').forEach(sel => {
+                        sel.value = '';
+                    });
+                })
+                .catch((error) => {
+                    console.error("[EmailJS] Send error:", error);
+                    showMailerToast(
+                        'error',
+                        'Send Failed',
+                        'Something went wrong. Please try again.'
+                    );
+                })
+                .finally(() => {
+                    sendInquiryBtn.disabled = false;
+                    sendInquiryBtn.innerText = originalText;
+                });
+        });
+    }
 
     if (bookConsultBtn) {
         bookConsultBtn.addEventListener('click', () => {
@@ -251,12 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fullName = fullNameInput.value.trim();
 
             if (!fullName) {
-                // Reuse the mailer toast if available, otherwise alert
-                if (typeof showMailerToast === 'function') {
-                    showMailerToast('error', 'Name Required', 'Please fill in your Full Name before booking a consultation.');
-                } else {
-                    alert('Please fill in your Full Name before booking.');
-                }
+                showMailerToast('error', 'Name Required', 'Please fill in your Full Name before booking a consultation.');
                 fullNameInput.focus();
                 return;
             }
@@ -266,9 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
             bookConsultBtn.innerText = 'Booking Slot...';
 
             setTimeout(() => {
-                if (typeof showMailerToast === 'function') {
-                    showMailerToast('success', 'Consultation Booked!', `Great, ${fullName}! A scheduling email has been dispatched to our team.`);
-                }
+                showMailerToast('success', 'Consultation Booked!', `Great, ${fullName}! A scheduling email has been dispatched to our team.`);
                 bookConsultBtn.disabled = false;
                 bookConsultBtn.innerText = originalText;
             }, 1500);

@@ -769,6 +769,11 @@ body {
     outline: none;
 }
 
+.form-group select option {
+    background-color: var(--bg-card);
+    color: var(--color-text-main);
+}
+
 .form-group textarea {
     resize: vertical;
     min-height: 120px;
@@ -1253,7 +1258,9 @@ footer {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ── Toast: support both .active and .show classes ──────────── */

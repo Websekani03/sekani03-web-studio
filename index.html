@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sekani Digital Studio — Creative Agency & Web Solutions</title>
     <link rel="stylesheet" href="css/day16.css">
+    <!-- EmailJS Browser SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init({
+                publicKey: "G_nDwqYapbUd70daVlMFJ",
+            });
+        })();
+    </script>
 </head>
 
 <body>
@@ -635,9 +644,6 @@
             <p id="toast-message">We have received your inquiry. Our team will contact you shortly!</p>
         </div>
     </div>
-
-    <!-- Frontend Form Handler (sends data to backend /api/contact) -->
-    <script src="backend/mailer.js"></script>
 
     <!-- Custom Logic Script -->
     <script src="js/day16.js"></script>
