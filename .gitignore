@@ -1,2 +1,23 @@
 backend/.env
 **/.env
+
+# Dependencies
+node_modules/
+backend/node_modules/
+
+# Environment Variables
+.env
+backend/.env
+**/.env
+
+# Build outputs
+dist/
+build/
+
+# Logs
+npm-debug.log*
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
