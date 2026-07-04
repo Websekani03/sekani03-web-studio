@@ -1,0 +1,12 @@
+{
+  "name": "sekani-studio",
+  "version": "1.0.0",
+  "description": "Sekani Digital Studio — full-stack site with Node.js/Express backend and Gmail SMTP contact form.",
+  "scripts": {
+    "start": "node backend/server.js",
+    "install:backend": "npm install --prefix backend"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

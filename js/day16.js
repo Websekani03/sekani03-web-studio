@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------
-    // 9. Contact Form & Consultation Booking Handlers (EmailJS)
+    // 9. Contact Form & Consultation Booking Handlers (Node.js Backend)
     // -------------------------------------------------------------------------
     const contactForm = document.getElementById('contact-form');
     const sendInquiryBtn = document.getElementById('b1');
@@ -285,41 +285,60 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const fullName = document.getElementById('fname').value.trim();
-            const serviceSelected = document.getElementById('nservice').value;
+            const formData = {
+                fname:    document.getElementById("fname").value.trim(),
+                email:    document.getElementById("email").value.trim(),
+                bname:    document.getElementById("bname").value.trim(),
+                nservice: document.getElementById("nservice").value,
+                budget:   document.getElementById("budget").value,
+                desc:     document.getElementById("desc").value.trim(),
+            };
 
             // Simple validation UI effect
             sendInquiryBtn.disabled = true;
             const originalText = sendInquiryBtn.innerText;
             sendInquiryBtn.innerText = 'Sending Inquiry...';
 
-            // Send form using EmailJS
-            emailjs.sendForm('service_o67d551', 'template_29sxvvq', contactForm)
-                .then(() => {
-                    showMailerToast(
-                        'success',
-                        'Inquiry Sent!',
-                        `Thank you, ${fullName}! Your inquiry about "${serviceSelected}" has been successfully recorded.`
-                    );
-                    contactForm.reset();
+            // Send form using local backend API
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(async (response) => {
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Server error. Please try again.');
+                }
+                return data;
+            })
+            .then((result) => {
+                showMailerToast(
+                    'success',
+                    'Inquiry Sent!',
+                    result.message || `Thank you, ${formData.fname}! Your inquiry has been successfully sent.`
+                );
+                contactForm.reset();
 
-                    // Reset select field floating labels
-                    document.querySelectorAll('.form-group select').forEach(sel => {
-                        sel.value = '';
-                    });
-                })
-                .catch((error) => {
-                    console.error("[EmailJS] Send error:", error);
-                    showMailerToast(
-                        'error',
-                        'Send Failed',
-                        'Something went wrong. Please try again.'
-                    );
-                })
-                .finally(() => {
-                    sendInquiryBtn.disabled = false;
-                    sendInquiryBtn.innerText = originalText;
+                // Reset select field floating labels
+                document.querySelectorAll('.form-group select').forEach(sel => {
+                    sel.value = '';
                 });
+            })
+            .catch((error) => {
+                console.error("[Backend] Send error:", error);
+                showMailerToast(
+                    'error',
+                    'Send Failed',
+                    error.message || 'Something went wrong. Please try again.'
+                );
+            })
+            .finally(() => {
+                sendInquiryBtn.disabled = false;
+                sendInquiryBtn.innerText = originalText;
+            });
         });
     }
 
