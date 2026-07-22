@@ -5,11 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sekani Digital Studio — Creative Agency & Web Solutions</title>
+    <meta name="description"
+        content="Sekani Digital Studio builds premium, responsive websites and digital experiences designed to convert, engage, and elevate your online presence.">
     <link rel="stylesheet" href="css/day16.css">
-
+    <style>
+        /* Force label floating for date and time inputs */
+        .form-group input[type="date"] + label,
+        .form-group input[type="time"] + label {
+            top: -10px !important;
+            left: 15px !important;
+            font-size: 0.8rem !important;
+            background-color: #0c1222 !important; /* matches --bg-card */
+            padding: 0 8px !important;
+            color: var(--color-primary) !important;
+        }
+    </style>
 </head>
 
 <body>
+
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress"></div>
 
@@ -539,6 +553,16 @@
                         <div class="form-group">
                             <input type="text" id="bname" name="bname" placeholder=" ">
                             <label for="bname">Business Name</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="date" id="booking-date" name="date" placeholder=" ">
+                            <label for="booking-date">Preferred Date</label>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="time" id="booking-time" name="time" placeholder=" ">
+                            <label for="booking-time">Preferred Time</label>
                         </div>
 
                         <div class="form-group">

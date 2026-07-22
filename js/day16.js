@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // =========================================================================
+    // 0. Server Wakeup Screen
+    // =========================================================================
+    // The /health ping is fired IMMEDIATELY via an inline <script> in index.html,
+    // placed right after the #wakeup-screen div — no DOMContentLoaded wait.
+    // When the server responds OK, that script dismisses the screen.
+    // Nothing to do here; the screen is already being handled.
+
     // -------------------------------------------------------------------------
     // 1. Scroll Progress Bar
     // -------------------------------------------------------------------------
@@ -280,6 +288,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     const sendInquiryBtn = document.getElementById('b1');
     const bookConsultBtn = document.getElementById('b2');
+    const bookingDateInput = document.getElementById('booking-date');
+
+    // Automatically set minimum allowed date to today
+    if (bookingDateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        bookingDateInput.setAttribute('min', today);
+    }
 
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
@@ -299,15 +314,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = sendInquiryBtn.innerText;
             sendInquiryBtn.innerText = 'Sending Inquiry...';
 
-            // Send form using local backend API
+            // Send form using backend API with timeout support
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+
             fetch('/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
+                signal: controller.signal,
             })
             .then(async (response) => {
+                clearTimeout(timeoutId);
                 const data = await response.json();
                 if (!response.ok) {
                     throw new Error(data.message || 'Server error. Please try again.');
@@ -329,10 +349,13 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch((error) => {
                 console.error("[Backend] Send error:", error);
+                const isTimeout = error.name === 'AbortError';
                 showMailerToast(
                     'error',
-                    'Send Failed',
-                    error.message || 'Something went wrong. Please try again.'
+                    isTimeout ? 'Server Timeout' : 'Send Failed',
+                    isTimeout
+                        ? 'The server took too long to respond. Please wait a moment and try again.'
+                        : (error.message || 'Something went wrong. Please try again.')
                 );
             })
             .finally(() => {
@@ -343,13 +366,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (bookConsultBtn) {
-        bookConsultBtn.addEventListener('click', () => {
-            const fullNameInput = document.getElementById('fname');
-            const fullName = fullNameInput.value.trim();
+        bookConsultBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
 
-            if (!fullName) {
-                showMailerToast('error', 'Name Required', 'Please fill in your Full Name before booking a consultation.');
-                fullNameInput.focus();
+            const name = document.getElementById('fname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const date = document.getElementById('booking-date') ? document.getElementById('booking-date').value : '';
+            const time = document.getElementById('booking-time') ? document.getElementById('booking-time').value : '';
+            const service = document.getElementById('nservice').value;
+            const notes = document.getElementById('desc').value.trim();
+
+            if (!name || !email || !date || !time) {
+                showMailerToast('error', 'Missing Fields', 'Full Name, Email, Preferred Date, and Preferred Time are required to book a consultation.');
                 return;
             }
 
@@ -357,11 +385,59 @@ document.addEventListener('DOMContentLoaded', () => {
             const originalText = bookConsultBtn.innerText;
             bookConsultBtn.innerText = 'Booking Slot...';
 
-            setTimeout(() => {
-                showMailerToast('success', 'Consultation Booked!', `Great, ${fullName}! A scheduling email has been dispatched to our team.`);
+            const payload = { name, email, date, time, service, notes };
+
+            // Send booking request to backend
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+
+            try {
+                const response = await fetch('/api/book-consultation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showMailerToast(
+                        'success',
+                        'Consultation Booked!',
+                        data.message || `Thank you, ${name}! Your consultation has been successfully booked.`
+                    );
+                    if (contactForm) {
+                        contactForm.reset();
+                    }
+                    // Reset select field floating labels
+                    document.querySelectorAll('.form-group select').forEach(sel => {
+                        sel.value = '';
+                    });
+                } else {
+                    showMailerToast(
+                        'error',
+                        'Booking Failed',
+                        data.message || 'Something went wrong. Please try again.'
+                    );
+                }
+            } catch (error) {
+                console.error("[Backend] Booking error:", error);
+                const isTimeout = error.name === 'AbortError';
+                showMailerToast(
+                    'error',
+                    isTimeout ? 'Server Timeout' : 'Booking Failed',
+                    isTimeout
+                        ? 'The server took too long to respond. Please wait a moment and try again.'
+                        : 'Could not connect to the server. Please check your internet connection.'
+                );
+            } finally {
                 bookConsultBtn.disabled = false;
                 bookConsultBtn.innerText = originalText;
-            }, 1500);
+            }
         });
     }
 });

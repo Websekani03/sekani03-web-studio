@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: sekani-studio
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install --prefix backend
+    startCommand: node backend/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # ⚠️  Set these in the Render dashboard → Environment tab (never hardcode here)
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: RECIPIENT_EMAIL
+        sync: false
+      # Render automatically sets RENDER_EXTERNAL_URL — used for the keep-alive self-ping

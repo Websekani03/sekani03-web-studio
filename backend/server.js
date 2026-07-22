@@ -8,6 +8,8 @@
  *  - Exposes POST /api/contact to receive form submissions
  *    and email them via Gmail SMTP (Nodemailer)
  *  - Reads credentials safely from backend/.env
+ *  - /health endpoint for uptime monitoring & keep-alive pings
+ *  - Self-pings every 14 min to prevent Render free-tier cold starts
  * ============================================================
  */
 
@@ -17,10 +19,31 @@ const path       = require("path");
 const express    = require("express");
 const nodemailer = require("nodemailer");
 const cors       = require("cors");
+const http       = require("http");
+const https      = require("https");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
+
+// ── Google Calendar booking module ────────────────────────────
+const { bookConsultation } = require("./calendar");
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
+
+// ── Check required environment variables on startup ──────────
+const REQUIRED_ENV = ["GMAIL_USER", "GMAIL_APP_PASSWORD", "RECIPIENT_EMAIL"];
+const missingEnv = REQUIRED_ENV.filter((key) => !process.env[key]);
+if (missingEnv.length > 0) {
+    console.warn("[ENV] WARNING: Missing environment variables:", missingEnv.join(", "));
+    console.warn("[ENV] Contact form emails will NOT be sent until these are set.");
+    console.warn("[ENV] On Render: go to Environment tab and add these variables.");
+}
+
+// Check calendar credentials
+const hasCalendarCredentials = process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY;
+if (!hasCalendarCredentials) {
+    console.warn("[ENV] WARNING: Missing Google Calendar credentials.");
+    console.warn("[ENV] Please set GOOGLE_CLIENT_EMAIL and GOOGLE_PRIVATE_KEY in backend/.env");
+}
 
 // ── Serve the frontend (LearningFolder root) ─────────────────
 // Everything one level up from /backend is treated as static files
@@ -28,9 +51,22 @@ const FRONTEND_ROOT = path.join(__dirname, "..");
 app.use(express.static(FRONTEND_ROOT));
 
 // ── Middleware ────────────────────────────────────────────────
-app.use(cors());                            // allow browser fetch calls
+app.use(cors({                              // allow browser fetch calls
+    origin: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+}));
 app.use(express.json());                    // parse JSON request bodies
 app.use(express.urlencoded({ extended: true }));
+
+// ── Health check endpoint (for UptimeRobot / keep-alive pings) ──
+app.get("/health", (req, res) => {
+    res.status(200).json({
+        status: "ok",
+        service: "Sekani Studio Backend",
+        timestamp: new Date().toISOString(),
+    });
+});
 
 // ── Nodemailer transporter (Gmail SMTP) ──────────────────────
 const transporter = nodemailer.createTransport({
@@ -146,6 +182,10 @@ app.post("/api/contact", async (req, res) => {
     }
 });
 
+// ── POST /api/book-consultation ──────────────────────────────
+// Creates a Google Calendar event with a Meet link and emails the attendee.
+app.post("/api/book-consultation", bookConsultation);
+
 // ── Catch-all: serve index.html for any unknown route ────────
 app.get("*", (req, res) => {
     res.sendFile(path.join(FRONTEND_ROOT, "index.html"));
@@ -159,10 +199,33 @@ app.listen(PORT, () => {
     console.log("  +-----------------------------------------+");
     console.log(`  |  Frontend:  http://localhost:${PORT}        |`);
     console.log(`  |  API:       http://localhost:${PORT}/api/contact |`);
+    console.log(`  |  Health:    http://localhost:${PORT}/health      |`);
     console.log("  +-----------------------------------------+");
     console.log("");
     console.log("  Press Ctrl+C to stop.");
     console.log("");
+
+    // ── Self-ping keep-alive (prevents Render free tier cold starts) ──
+    // Pings the /health endpoint every 14 minutes to keep the server warm.
+    // On Render free tier, services sleep after 15 minutes of inactivity.
+    const RENDER_URL = process.env.RENDER_EXTERNAL_URL;
+    if (RENDER_URL) {
+        const pingUrl = `${RENDER_URL}/health`;
+        const pingInterval = 14 * 60 * 1000; // 14 minutes
+        const pingFn = RENDER_URL.startsWith("https") ? https : http;
+
+        setInterval(() => {
+            pingFn.get(pingUrl, (res) => {
+                console.log(`[KeepAlive] Pinged ${pingUrl} — status: ${res.statusCode}`);
+            }).on("error", (err) => {
+                console.warn(`[KeepAlive] Ping failed: ${err.message}`);
+            });
+        }, pingInterval);
+
+        console.log(`[KeepAlive] Self-ping enabled → ${pingUrl} every 14 min`);
+    } else {
+        console.log("[KeepAlive] RENDER_EXTERNAL_URL not set — self-ping disabled (local dev mode)");
+    }
 });
 
 // ── Helper: escape HTML to prevent XSS in email ──────────────
