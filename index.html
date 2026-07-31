@@ -2134,6 +2134,17 @@
             toast._timer = setTimeout(() => toast.classList.remove("show"), 5000);
         }
 
+        // ── API Base URL helper ──────────────────────────────────
+        // If hosted statically (e.g. GitHub Pages), dynamic routing resolves to production Vercel URL.
+        function getApiUrl(endpoint) {
+            if (window.location.hostname.includes("github.io")) {
+                // REPLACE THIS with your Vercel deployment URL (e.g. https://sekani-studio.vercel.app)
+                const VERCEL_URL = "https://sekani-studio.vercel.app";
+                return `${VERCEL_URL}${endpoint}`;
+            }
+            return endpoint;
+        }
+
         // ── Contact Form ──────────────────────────────────────
         const contactForm = document.getElementById("contact-form");
         const contactBtn = document.getElementById("contact-submit");
@@ -2158,7 +2169,7 @@
                 contactBtn.disabled = true;
                 contactTxt.textContent = "Sending…";
                 try {
-                    const res = await fetch("/api/contact", {
+                    const res = await fetch(getApiUrl("/api/contact"), {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(data),
@@ -2210,7 +2221,7 @@
                 bookingTxt.textContent = "⏳ Booking…";
 
                 try {
-                    const res = await fetch("/api/book-consultation", {
+                    const res = await fetch(getApiUrl("/api/book-consultation"), {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(payload),

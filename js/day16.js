@@ -1,3 +1,14 @@
+// ── API Base URL helper ──────────────────────────────────
+// If hosted statically (e.g. GitHub Pages), dynamic routing resolves to production Vercel URL.
+function getApiUrl(endpoint) {
+    if (window.location.hostname.includes("github.io")) {
+        // REPLACE THIS with your Vercel deployment URL (e.g. https://sekani-studio.vercel.app)
+        const VERCEL_URL = "https://sekani-studio.vercel.app";
+        return `${VERCEL_URL}${endpoint}`;
+    }
+    return endpoint;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     // 0. Server Wakeup Screen
@@ -318,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
-            fetch('/api/contact', {
+            fetch(getApiUrl('/api/contact'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -392,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
             try {
-                const response = await fetch('/api/book-consultation', {
+                const response = await fetch(getApiUrl('/api/book-consultation'), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

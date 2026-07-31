@@ -192,41 +192,43 @@ app.get("*", (req, res) => {
 });
 
 // ── Start server ──────────────────────────────────────────────
-app.listen(PORT, () => {
-    console.log("");
-    console.log("  +-----------------------------------------+");
-    console.log("  |   Sekani Studio  --  Server Running     |");
-    console.log("  +-----------------------------------------+");
-    console.log(`  |  Frontend:  http://localhost:${PORT}        |`);
-    console.log(`  |  API:       http://localhost:${PORT}/api/contact |`);
-    console.log(`  |  Health:    http://localhost:${PORT}/health      |`);
-    console.log("  +-----------------------------------------+");
-    console.log("");
-    console.log("  Press Ctrl+C to stop.");
-    console.log("");
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log("");
+        console.log("  +-----------------------------------------+");
+        console.log("  |   Sekani Studio  --  Server Running     |");
+        console.log("  +-----------------------------------------+");
+        console.log(`  |  Frontend:  http://localhost:${PORT}        |`);
+        console.log(`  |  API:       http://localhost:${PORT}/api/contact |`);
+        console.log(`  |  Health:    http://localhost:${PORT}/health      |`);
+        console.log("  +-----------------------------------------+");
+        console.log("");
+        console.log("  Press Ctrl+C to stop.");
+        console.log("");
 
-    // ── Self-ping keep-alive (prevents Render free tier cold starts) ──
-    // Pings the /health endpoint every 14 minutes to keep the server warm.
-    // On Render free tier, services sleep after 15 minutes of inactivity.
-    const RENDER_URL = process.env.RENDER_EXTERNAL_URL;
-    if (RENDER_URL) {
-        const pingUrl = `${RENDER_URL}/health`;
-        const pingInterval = 14 * 60 * 1000; // 14 minutes
-        const pingFn = RENDER_URL.startsWith("https") ? https : http;
+        // ── Self-ping keep-alive (prevents Render free tier cold starts) ──
+        // Pings the /health endpoint every 14 minutes to keep the server warm.
+        // On Render free tier, services sleep after 15 minutes of inactivity.
+        const RENDER_URL = process.env.RENDER_EXTERNAL_URL;
+        if (RENDER_URL) {
+            const pingUrl = `${RENDER_URL}/health`;
+            const pingInterval = 14 * 60 * 1000; // 14 minutes
+            const pingFn = RENDER_URL.startsWith("https") ? https : http;
 
-        setInterval(() => {
-            pingFn.get(pingUrl, (res) => {
-                console.log(`[KeepAlive] Pinged ${pingUrl} — status: ${res.statusCode}`);
-            }).on("error", (err) => {
-                console.warn(`[KeepAlive] Ping failed: ${err.message}`);
-            });
-        }, pingInterval);
+            setInterval(() => {
+                pingFn.get(pingUrl, (res) => {
+                    console.log(`[KeepAlive] Pinged ${pingUrl} — status: ${res.statusCode}`);
+                }).on("error", (err) => {
+                    console.warn(`[KeepAlive] Ping failed: ${err.message}`);
+                });
+            }, pingInterval);
 
-        console.log(`[KeepAlive] Self-ping enabled → ${pingUrl} every 14 min`);
-    } else {
-        console.log("[KeepAlive] RENDER_EXTERNAL_URL not set — self-ping disabled (local dev mode)");
-    }
-});
+            console.log(`[KeepAlive] Self-ping enabled → ${pingUrl} every 14 min`);
+        } else {
+            console.log("[KeepAlive] RENDER_EXTERNAL_URL not set — self-ping disabled (local dev mode)");
+        }
+    });
+}
 
 // ── Helper: escape HTML to prevent XSS in email ──────────────
 function escapeHtml(str) {
@@ -238,3 +240,5 @@ function escapeHtml(str) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+
+module.exports = app;
