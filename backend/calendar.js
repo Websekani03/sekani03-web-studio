@@ -60,6 +60,18 @@ function getCalendarClient() {
 
 // -- Route Handler: POST /api/book-consultation ----------------
 async function bookConsultation(req, res) {
+    // Guard check for missing environment variables on Vercel
+    const missingKeys = [];
+    if (!process.env.GOOGLE_CLIENT_EMAIL) missingKeys.push("GOOGLE_CLIENT_EMAIL");
+    if (!process.env.GOOGLE_PRIVATE_KEY) missingKeys.push("GOOGLE_PRIVATE_KEY");
+    if (!process.env.GOOGLE_CALENDAR_ID) missingKeys.push("GOOGLE_CALENDAR_ID");
+    if (missingKeys.length > 0) {
+        return res.status(500).json({
+            success: false,
+            message: `Server configuration error: Missing environment variable(s): ${missingKeys.join(", ")}. Please configure them in your Vercel Project Settings (Environment Variables) and ensure they are assigned to Production/Preview.`,
+        });
+    }
+
     const { name, email, date, time, service, notes } = req.body;
 
     // 1. Validate required fields

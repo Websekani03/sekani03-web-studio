@@ -116,6 +116,18 @@ transporter.verify((error) => {
 
 // ── POST /api/contact ─────────────────────────────────────────
 app.post("/api/contact", async (req, res) => {
+    // Guard check for missing environment variables on Vercel
+    const missingKeys = [];
+    if (!process.env.GMAIL_USER) missingKeys.push("GMAIL_USER");
+    if (!process.env.GMAIL_APP_PASSWORD) missingKeys.push("GMAIL_APP_PASSWORD");
+    if (!process.env.RECIPIENT_EMAIL) missingKeys.push("RECIPIENT_EMAIL");
+    if (missingKeys.length > 0) {
+        return res.status(500).json({
+            success: false,
+            message: `Server configuration error: Missing environment variable(s): ${missingKeys.join(", ")}. Please configure them in your Vercel Project Settings (Environment Variables) and ensure they are assigned to Production/Preview.`,
+        });
+    }
+
     const { fname, email, bname, nservice, budget, desc } = req.body;
 
     // Basic server-side validation
