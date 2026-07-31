@@ -6,6 +6,13 @@
     "start": "node backend/server.js",
     "install:backend": "npm install --prefix backend"
   },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "googleapis": "^173.0.0",
+    "nodemailer": "^6.9.13"
+  },
   "engines": {
     "node": ">=18.0.0"
   }
