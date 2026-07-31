@@ -23,6 +23,33 @@ const http       = require("http");
 const https      = require("https");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
+// Clean up surrounding quotes from environment variables if present (e.g. copied literally on Vercel Dashboard)
+function cleanEnvValue(value) {
+    if (!value) return value;
+    let cleaned = value.trim();
+    if (cleaned.startsWith('"') && cleaned.endsWith('"')) {
+        cleaned = cleaned.slice(1, -1);
+    } else if (cleaned.startsWith("'") && cleaned.endsWith("'")) {
+        cleaned = cleaned.slice(1, -1);
+    }
+    return cleaned;
+}
+
+// Apply clean-up to the relevant variables in process.env
+const envKeysToClean = [
+    "GMAIL_USER",
+    "GMAIL_APP_PASSWORD",
+    "RECIPIENT_EMAIL",
+    "GOOGLE_CLIENT_EMAIL",
+    "GOOGLE_PRIVATE_KEY",
+    "GOOGLE_CALENDAR_ID"
+];
+envKeysToClean.forEach((key) => {
+    if (process.env[key]) {
+        process.env[key] = cleanEnvValue(process.env[key]);
+    }
+});
+
 // ── Google Calendar booking module ────────────────────────────
 const { bookConsultation } = require("./calendar");
 
@@ -174,10 +201,10 @@ app.post("/api/contact", async (req, res) => {
             message: "Your inquiry has been sent! We will get back to you shortly.",
         });
     } catch (err) {
-        console.error("[Contact] Failed to send email:", err.message);
+        console.error("[Contact] Failed to send email:", err);
         return res.status(500).json({
             success: false,
-            message: "Server error: could not send email. Please try again later.",
+            message: `Server error: could not send email. Details: ${err.message}`,
         });
     }
 });

@@ -19,11 +19,28 @@ const { google } = require("googleapis");
 // -- Authenticate using Service Account ------------------------
 // Authenticates via environment variables: GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY
 function getCalendarClient() {
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY
-        ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n")
-        : undefined;
+    let privateKey = process.env.GOOGLE_PRIVATE_KEY;
+    if (privateKey) {
+        privateKey = privateKey.trim();
+        if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
+            privateKey = privateKey.slice(1, -1);
+        } else if (privateKey.startsWith("'") && privateKey.endsWith("'")) {
+            privateKey = privateKey.slice(1, -1);
+        }
+        privateKey = privateKey.replace(/\\n/g, "\n");
+    }
 
-    if (!process.env.GOOGLE_CLIENT_EMAIL || !privateKey) {
+    let clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+    if (clientEmail) {
+        clientEmail = clientEmail.trim();
+        if (clientEmail.startsWith('"') && clientEmail.endsWith('"')) {
+            clientEmail = clientEmail.slice(1, -1);
+        } else if (clientEmail.startsWith("'") && clientEmail.endsWith("'")) {
+            clientEmail = clientEmail.slice(1, -1);
+        }
+    }
+
+    if (!clientEmail || !privateKey) {
         throw new Error(
             "Missing Google Service Account credentials. " +
             "Please configure GOOGLE_CLIENT_EMAIL and GOOGLE_PRIVATE_KEY in your environment variables."
@@ -32,7 +49,7 @@ function getCalendarClient() {
 
     const auth = new google.auth.GoogleAuth({
         credentials: {
-            client_email: process.env.GOOGLE_CLIENT_EMAIL,
+            client_email: clientEmail,
             private_key: privateKey,
         },
         scopes: ["https://www.googleapis.com/auth/calendar"],
@@ -158,24 +175,24 @@ async function bookConsultation(req, res) {
             end: endDateTime.toISOString(),
         });
     } catch (err) {
-        console.error("[Calendar] Failed to create event:", err.message);
+        console.error("[Calendar] Failed to create event:", err);
 
         if (err.code === 403 || err.message?.includes("SERVICE_DISABLED")) {
             return res.status(500).json({
                 success: false,
-                message: "Google Calendar API not enabled or service account lacks calendar access.",
+                message: `Google Calendar API not enabled or service account lacks calendar access. Details: ${err.message}`,
             });
         }
         if (err.code === 404) {
             return res.status(500).json({
                 success: false,
-                message: "Calendar not found. Check GOOGLE_CALENDAR_ID in .env.",
+                message: `Calendar not found. Check GOOGLE_CALENDAR_ID. Details: ${err.message}`,
             });
         }
 
         return res.status(500).json({
             success: false,
-            message: "Could not book the consultation. Please try again or contact us directly.",
+            message: `Could not book the consultation. Details: ${err.message}`,
         });
     }
 }
