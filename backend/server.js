@@ -50,6 +50,11 @@ envKeysToClean.forEach((key) => {
     }
 });
 
+// Gmail App Passwords are 16 chars — strip any spaces that may have been copy-pasted
+if (process.env.GMAIL_APP_PASSWORD) {
+    process.env.GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD.replace(/\s+/g, "");
+}
+
 // ── Google Calendar booking module ────────────────────────────
 const { bookConsultation } = require("./calendar");
 
