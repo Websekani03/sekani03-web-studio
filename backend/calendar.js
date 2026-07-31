@@ -22,12 +22,15 @@ function getCalendarClient() {
     let privateKey = process.env.GOOGLE_PRIVATE_KEY;
     if (privateKey) {
         privateKey = privateKey.trim();
-        if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
-            privateKey = privateKey.slice(1, -1);
-        } else if (privateKey.startsWith("'") && privateKey.endsWith("'")) {
+        // Strip surrounding quotes (single or double) if present
+        if ((privateKey.startsWith('"') && privateKey.endsWith('"')) ||
+            (privateKey.startsWith("'") && privateKey.endsWith("'"))) {
             privateKey = privateKey.slice(1, -1);
         }
+        // Replace literal \n sequences with actual newlines (handles .env and Vercel dashboard copy-paste)
         privateKey = privateKey.replace(/\\n/g, "\n");
+        // Also normalise any \r\n to just \n
+        privateKey = privateKey.replace(/\r\n/g, "\n");
     }
 
     let clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
