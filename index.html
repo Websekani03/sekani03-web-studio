@@ -4,20 +4,1338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sekani Digital Studio — Creative Agency & Web Solutions</title>
+    <title>Sekani Studio Web— Full Agency Website</title>
     <meta name="description"
-        content="Sekani Digital Studio builds premium, responsive websites and digital experiences designed to convert, engage, and elevate your online presence.">
-    <link rel="stylesheet" href="css/day16.css">
+        content="Sekani Studio builds premium, responsive websites and digital experiences. Explore our services, projects, pricing, and book a free consultation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
-        /* Force label floating for date and time inputs */
-        .form-group input[type="date"] + label,
-        .form-group input[type="time"] + label {
-            top: -10px !important;
-            left: 15px !important;
-            font-size: 0.8rem !important;
-            background-color: #0c1222 !important; /* matches --bg-card */
-            padding: 0 8px !important;
-            color: var(--color-primary) !important;
+        /* ═══════════════════════════════════════════════
+           DESIGN TOKENS & RESET
+        ═══════════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --cyan: #00d2ff;
+            --indigo: #6366f1;
+            --navy-deep: #060913;
+            --navy: #0c1222;
+            --navy-mid: #111827;
+            --navy-card: #131b2e;
+            --border: rgba(255, 255, 255, 0.08);
+            --text-muted: #9ca3af;
+            --text-light: #f1f5f9;
+            --font-head: 'Outfit', system-ui, sans-serif;
+            --font-body: 'Inter', system-ui, sans-serif;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --transition: 0.28s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--navy-deep);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img,
+        svg {
+            display: block;
+            max-width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ═══════════════════════════════════════════════
+           SCROLL PROGRESS BAR
+        ═══════════════════════════════════════════════ */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(to right, var(--cyan), var(--indigo));
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+
+        /* ═══════════════════════════════════════════════
+           NAVBAR
+        ═══════════════════════════════════════════════ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(6, 9, 19, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(6, 9, 19, 0.98);
+        }
+
+        .navbar-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-light);
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            background: linear-gradient(to right, var(--cyan), var(--indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cyan);
+            border-radius: 2px;
+            transition: width var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-light);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 9px 22px;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #fff !important;
+            transition: opacity var(--transition), transform var(--transition) !important;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        /* Hamburger */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-light);
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .nav-toggle.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-toggle.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        @media (max-width: 820px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 68px;
+                left: 0;
+                right: 0;
+                background: rgba(6, 9, 19, 0.98);
+                border-bottom: 1px solid var(--border);
+                flex-direction: column;
+                gap: 0;
+                padding: 16px 0 24px;
+                transform: translateY(-110%);
+                transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .nav-links.open {
+                transform: translateY(0);
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 14px 24px;
+                font-size: 1rem;
+            }
+
+            .nav-cta {
+                margin: 8px auto 0;
+                display: inline-block;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════
+           SECTION UTILITY
+        ═══════════════════════════════════════════════ */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 16px;
+        }
+
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--cyan);
+            border-radius: 2px;
+        }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .section-head h2 {
+            font-family: var(--font-head);
+            font-size: clamp(1.9rem, 4vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
+
+        .section-head h2 span {
+            color: var(--cyan);
+        }
+
+        .section-head p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        /* Reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ═══════════════════════════════════════════════
+           HERO SECTION
+        ═══════════════════════════════════════════════ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 24px 80px;
+        }
+
+        .hero-glow {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0, 210, 255, 0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 80% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Animated grid dots */
+        .hero-dots {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 18px;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.25);
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--cyan);
+            margin-bottom: 28px;
+            animation: fadeDown 0.8s ease both;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--cyan);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8)
+            }
+        }
+
+        .hero h1 {
+            font-family: var(--font-head);
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -1px;
+            margin-bottom: 22px;
+            animation: fadeDown 0.9s 0.15s ease both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--cyan) 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.15rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            animation: fadeDown 1s 0.3s ease both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeDown 1.1s 0.45s ease both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+            border: none;
+            font-family: var(--font-body);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cyan), #3a7bd5);
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 210, 255, 0.45);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-light);
+            border: 1.5px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            animation: fadeDown 1.4s 0.8s ease both;
+        }
+
+        .scroll-mouse {
+            width: 22px;
+            height: 36px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            padding-top: 6px;
+        }
+
+        .scroll-mouse::before {
+            content: '';
+            width: 3px;
+            height: 8px;
+            background: var(--cyan);
+            border-radius: 3px;
+            animation: scrollWheel 1.8s ease infinite;
+        }
+
+        @keyframes scrollWheel {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 1
+            }
+
+            60% {
+                transform: translateY(10px);
+                opacity: 0
+            }
+        }
+
+        /* ═══════════════════════════════════════════════
+           SERVICES SECTION
+        ═══════════════════════════════════════════════ */
+        .services-section {
+            padding: 100px 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--cyan), var(--indigo));
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 210, 255, 0.25);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--cyan);
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            background: rgba(0, 210, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .service-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 0.93rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════════════
+           FEATURED PROJECTS SECTION
+        ═══════════════════════════════════════════════ */
+        .projects-section {
+            padding: 100px 0;
+            background: var(--navy);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            border-color: rgba(0, 210, 255, 0.2);
+        }
+
+        .project-thumb {
+            position: relative;
+            height: 170px;
+            overflow: hidden;
+        }
+
+        .project-thumb svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(6, 9, 19, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-info {
+            padding: 22px 22px 24px;
+        }
+
+        .project-info h3 {
+            font-family: var(--font-head);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .project-info p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 4px 10px;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 50px;
+            color: var(--cyan);
+        }
+
+        /* ═══════════════════════════════════════════════
+           PRICING SECTION
+        ═══════════════════════════════════════════════ */
+        .pricing-section {
+            padding: 100px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            align-items: start;
+        }
+
+        .pricing-card {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 30px;
+            position: relative;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--cyan);
+            background: linear-gradient(160deg, rgba(0, 210, 255, 0.06) 0%, var(--navy-card) 60%);
+            box-shadow: 0 0 0 1px rgba(0, 210, 255, 0.3), 0 20px 60px rgba(0, 210, 255, 0.1);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 16px;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+
+        .pricing-name {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .pricing-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .pricing-price {
+            margin-bottom: 28px;
+        }
+
+        .pricing-price .amount {
+            font-family: var(--font-head);
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .pricing-price .currency {
+            font-size: 1.4rem;
+            vertical-align: top;
+            padding-top: 6px;
+            display: inline-block;
+        }
+
+        .pricing-price .period {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .pricing-features li .check {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            background: rgba(0, 210, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan);
+            font-size: 0.7rem;
+            margin-top: 2px;
+        }
+
+        .btn-plan {
+            width: 100%;
+            padding: 13px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+        }
+
+        .btn-plan-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--text-light);
+        }
+
+        .btn-plan-outline:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .btn-plan-filled {
+            background: linear-gradient(135deg, var(--cyan), #3a7bd5);
+            border: none;
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-plan-filled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(0, 210, 255, 0.45);
+        }
+
+        /* ═══════════════════════════════════════════════
+           STATISTICS SECTION
+        ═══════════════════════════════════════════════ */
+        .stats-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.04) 0%, rgba(99, 102, 241, 0.04) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .stat-num {
+            font-family: var(--font-head);
+            font-size: clamp(2.4rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .stat-sub {
+            font-size: 0.82rem;
+            color: rgba(156, 163, 175, 0.7);
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        /* ═══════════════════════════════════════════════
+           TESTIMONIALS SECTION
+        ═══════════════════════════════════════════════ */
+        .testimonials-section {
+            padding: 100px 0;
+            background: var(--navy);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            position: relative;
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 210, 255, 0.15);
+        }
+
+        .quote-mark {
+            font-size: 3.5rem;
+            line-height: 0.8;
+            color: var(--cyan);
+            opacity: 0.35;
+            font-family: Georgia, serif;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .testimonial-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .author-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 1rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .author-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+
+        .author-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        /* ═══════════════════════════════════════════════
+           CONTACT SECTION
+        ═══════════════════════════════════════════════ */
+        .contact-section {
+            padding: 100px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .contact-info>p {
+            font-size: 0.93rem;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            line-height: 1.7;
+        }
+
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan);
+            flex-shrink: 0;
+        }
+
+        .contact-detail h4 {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .contact-detail a,
+        .contact-detail p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+
+        .contact-detail a:hover {
+            color: var(--cyan);
+        }
+
+        .social-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+        }
+
+        .social-btn:hover {
+            background: rgba(0, 210, 255, 0.1);
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Contact Form */
+        .contact-form-wrap {
+            background: var(--navy-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+        }
+
+        .field-group {
+            margin-bottom: 20px;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            margin-bottom: 7px;
+        }
+
+        .field-group input,
+        .field-group select,
+        .field-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.93rem;
+            font-family: var(--font-body);
+            color: var(--text-light);
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+            color-scheme: dark;
+        }
+
+        .field-group input::placeholder,
+        .field-group textarea::placeholder {
+            color: rgba(156, 163, 175, 0.5);
+        }
+
+        .field-group input:focus,
+        .field-group select:focus,
+        .field-group textarea:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.12);
+        }
+
+        .field-group select option {
+            background: var(--navy-card);
+        }
+
+        .field-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .form-row-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .agree-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .agree-group input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--cyan);
+            flex-shrink: 0;
+        }
+
+        .agree-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .agree-group a {
+            color: var(--cyan);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* ═══════════════════════════════════════════════
+           BOOKING SECTION
+        ═══════════════════════════════════════════════ */
+        .booking-section {
+            padding: 100px 0;
+            background: var(--navy);
+        }
+
+        .booking-inner {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .booking-form-wrap {
+            background: var(--navy-card);
+            border: 1px solid rgba(0, 210, 255, 0.15);
+            border-radius: var(--radius-lg);
+            padding: 44px 40px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 210, 255, 0.1);
+        }
+
+        @media (max-width: 540px) {
+            .booking-form-wrap {
+                padding: 28px 20px;
+            }
+        }
+
+        .booking-message {
+            margin-top: 20px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            line-height: 1.65;
+            display: none;
+        }
+
+        .booking-message.success {
+            display: block;
+            background: rgba(0, 210, 100, 0.1);
+            border: 1px solid rgba(0, 210, 100, 0.3);
+            color: #6ee7b7;
+        }
+
+        .booking-message.success a {
+            color: var(--cyan);
+        }
+
+        .booking-message.error {
+            display: block;
+            background: rgba(255, 80, 80, 0.1);
+            border: 1px solid rgba(255, 80, 80, 0.3);
+            color: #fca5a5;
+        }
+
+        /* ═══════════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════════ */
+        footer {
+            background: var(--navy-mid);
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+        }
+
+        .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+        }
+
+        /* ═══════════════════════════════════════════════
+           TOAST NOTIFICATION
+        ═══════════════════════════════════════════════ */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: var(--navy-card);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 340px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .toast-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .toast-msg {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ═══════════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════════ */
+        @media (max-width: 640px) {
+
+            .services-grid,
+            .projects-grid,
+            .pricing-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
@@ -27,642 +1345,901 @@
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress"></div>
 
-    <!-- Navigation Header -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="#home" class="logo">
-                <span>Sekani</span>Studio
-            </a>
+    <!-- ── Navigation ─────────────────────────────────────── -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#home" class="logo"><span>Sekani</span>Studio</a>
 
-            <button class="nav-toggle" aria-label="Toggle Menu" id="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
             </button>
 
             <ul class="nav-links" id="nav-links">
                 <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#oservice">Services</a></li>
-                <li><a href="#ourwork">Featured Works</a></li>
-                <li><a href="#whychooseus">Why Choose Us</a></li>
-                <li><a href="#statistic">Statistics</a></li>
-                <li><a href="#testimonials">Feedback</a></li>
-                <li><a href="#contacts">Contact</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#statistics">Statistics</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#booking" class="nav-cta">Book a Call</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="hero-section" id="home">
-        <div class="hero-bg-glow"></div>
-        <h1 class="reveal active">Creative Solutions For Modern Businesses</h1>
-        <p class="reveal active">We build premium, responsive websites and create cutting-edge digital experiences
-            designed to convert, engage, and elevate your online presence.</p>
-        <div class="hero-buttons reveal active">
-            <a href="#contacts" class="btn btn-primary">Start Your Project</a>
-            <a href="#ourwork" class="btn btn-secondary">View Our Work</a>
+    <!-- ── Hero Section ───────────────────────────────────── -->
+    <section class="hero" id="home">
+        <div class="hero-glow"></div>
+        <div class="hero-dots"></div>
+
+        <div class="hero-inner">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Available for new projects
+            </div>
+
+            <h1>
+                Transforming Ideas Into<br>
+                <span class="gradient-text">Digital Experiences</span>
+            </h1>
+
+            <p>
+                We create responsive websites and modern user interfaces that help businesses
+                strengthen their online presence and connect with customers across every device.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.59 1.25h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.83a16 16 0 0 0 6 6l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.5z" />
+                    </svg>
+                    Start Your Project
+                </a>
+                <a href="#services" class="btn btn-outline">
+                    Explore Services
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </a>
+            </div>
         </div>
-    </header>
+
+        <div class="hero-scroll-hint">
+            <div class="scroll-mouse"></div>
+            Scroll
+        </div>
+    </section>
 
     <main>
-        <!-- Services Section -->
-        <section class="services-section container" id="oservice">
-            <div class="section-header reveal">
-                <h2>Our <span>Services</span></h2>
-                <p>We provide full-scale frontend development, branding, and redesign solutions tailored to your
-                    business needs.</p>
-            </div>
 
-            <div class="services-grid">
-                <div class="service-card reveal">
-                    <div class="service-icon">
-                        <!-- Web Design SVG -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                    </div>
-                    <h3>Web Design</h3>
-                    <p>Clean and highly responsive websites built to establish a stunning and professional presence
-                        across all user devices.</p>
+        <!-- ── Our Services ────────────────────────────────── -->
+        <section class="services-section" id="services">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-label">What We Do</div>
+                    <h2>Our <span>Services</span></h2>
+                    <p>Comprehensive frontend solutions designed to build, style, and scale your digital presence
+                        professionally.</p>
                 </div>
 
-                <div class="service-card reveal">
-                    <div class="service-icon">
-                        <!-- Frontend Dev SVG -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="16 18 22 12 16 6"></polyline>
-                            <polyline points="8 6 2 12 8 18"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Frontend Development</h3>
-                    <p>Structured, fast, and scalable frontend codebases built using the absolute best HTML5, CSS3, and
-                        JavaScript practices.</p>
-                </div>
-
-                <div class="service-card reveal">
-                    <div class="service-icon">
-                        <!-- Landing Page SVG -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <circle cx="12" cy="12" r="6"></circle>
-                            <circle cx="12" cy="12" r="2"></circle>
-                        </svg>
-                    </div>
-                    <h3>Landing Pages</h3>
-                    <p>High-converting landing pages crafted meticulously to showcase products, services, and optimize
-                        client acquisitions.</p>
-                </div>
-
-                <div class="service-card reveal">
-                    <div class="service-icon">
-                        <!-- Website Redesign SVG -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
-                        </svg>
-                    </div>
-                    <h3>Website Redesign</h3>
-                    <p>Revamp outdated systems into modern, blazing-fast user experiences with clean layout structure
-                        and visual logic.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Works Section -->
-        <section class="works-section container" id="ourwork">
-            <div class="section-header reveal">
-                <h2>Featured <span>Works</span></h2>
-                <p>Take a look at the projects marking our frontend development journey. Each represents custom
-                    challenges solved and modern layouts crafted.</p>
-            </div>
-
-            <div class="works-grid">
-                <!-- Project 1: Developer Portfolio -->
-                <div class="work-card reveal">
-                    <div class="work-card-media">
-                        <!-- Clean Vector illustration/mockup of Portfolio -->
-                        <svg width="100%" height="100%" viewBox="0 0 300 170" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="170" fill="#0c1222" />
-                            <!-- Header -->
-                            <rect x="15" y="15" width="40" height="8" rx="2" fill="#6366f1" fill-opacity="0.6" />
-                            <rect x="230" y="15" width="55" height="8" rx="2" fill="#3b82f6" fill-opacity="0.3" />
-                            <!-- Profile Hero -->
-                            <circle cx="60" cy="80" r="25" fill="#00d2ff" fill-opacity="0.2" stroke="#00d2ff"
-                                stroke-width="1.5" />
-                            <rect x="100" y="65" width="120" height="10" rx="3" fill="#f8f9fa" />
-                            <rect x="100" y="85" width="160" height="6" rx="2" fill="#9ca3af" />
-                            <rect x="100" y="97" width="90" height="6" rx="2" fill="#9ca3af" />
-                            <!-- Grid blocks -->
-                            <rect x="25" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
-                                stroke-opacity="0.4" />
-                            <rect x="115" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
-                                stroke-opacity="0.4" />
-                            <rect x="205" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
-                                stroke-opacity="0.4" />
-                        </svg>
-                        <div class="work-card-overlay">
-                            <button class="btn btn-primary preview-project-btn" data-project="day13.html"
-                                data-title="Developer Portfolio">Live Preview</button>
-                        </div>
-                    </div>
-                    <div class="work-card-content">
-                        <h3>Developer Portfolio</h3>
-                        <p>A responsive developer showcase displaying frontend skill sets, nested card structures, and a
-                            organized coding timeline.</p>
-                        <div class="work-badges">
-                            <span class="work-badge">HTML5</span>
-                            <span class="work-badge">CSS Grid</span>
-                            <span class="work-badge">Responsive</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 2: Contact Form -->
-                <div class="work-card reveal">
-                    <div class="work-card-media">
-                        <!-- Contact form visual mockup SVG -->
-                        <svg width="100%" height="100%" viewBox="0 0 300 170" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="170" fill="#0c1222" />
-                            <!-- Form Box -->
-                            <rect x="60" y="20" width="180" height="130" rx="8" fill="#131b2e" stroke="#00d2ff"
-                                stroke-opacity="0.4" />
-                            <!-- Title -->
-                            <rect x="80" y="35" width="60" height="8" rx="2" fill="#f8f9fa" />
-                            <!-- Form inputs -->
-                            <rect x="80" y="55" width="140" height="14" rx="4" fill="#1e293b" stroke="#3b82f6"
-                                stroke-opacity="0.3" />
-                            <rect x="80" y="77" width="140" height="14" rx="4" fill="#1e293b" stroke="#3b82f6"
-                                stroke-opacity="0.3" />
-                            <rect x="80" y="99" width="140" height="24" rx="4" fill="#1e293b" stroke="#3b82f6"
-                                stroke-opacity="0.3" />
-                            <!-- Button -->
-                            <rect x="120" y="130" width="60" height="10" rx="3" fill="#ff9f1c" />
-                        </svg>
-                        <div class="work-card-overlay">
-                            <button class="btn btn-primary preview-project-btn" data-project="day12.html"
-                                data-title="Modern Contact Form">Live Preview</button>
-                        </div>
-                    </div>
-                    <div class="work-card-content">
-                        <h3>Modern Contact Form</h3>
-                        <p>A high-end contact screen featuring customized input elements, focus states, interactive
-                            hover responses, and smooth UI feedback.</p>
-                        <div class="work-badges">
-                            <span class="work-badge">Transitions</span>
-                            <span class="work-badge">Forms</span>
-                            <span class="work-badge">UI States</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3: Digital Studio Website -->
-                <div class="work-card reveal">
-                    <div class="work-card-media">
-                        <!-- Digital studio visual mockup SVG -->
-                        <svg width="100%" height="100%" viewBox="0 0 300 170" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="170" fill="#0c1222" />
-                            <!-- Split blocks -->
-                            <rect x="20" y="30" width="120" height="14" rx="3" fill="#6366f1" fill-opacity="0.7" />
-                            <rect x="20" y="52" width="110" height="8" rx="2" fill="#9ca3af" />
-                            <rect x="20" y="66" width="90" height="8" rx="2" fill="#9ca3af" />
-                            <rect x="20" y="85" width="50" height="14" rx="7" fill="#00d2ff" />
-                            <!-- Image block representation -->
-                            <rect x="160" y="30" width="120" height="110" rx="8" fill="#1e293b" stroke="#3b82f6"
-                                stroke-opacity="0.3" />
-                            <circle cx="220" cy="85" r="20" fill="#3b82f6" fill-opacity="0.2" />
-                            <path d="M180 120 L210 90 L240 115 L260 100 L280 125" stroke="#00d2ff" stroke-width="2"
-                                stroke-linecap="round" />
-                        </svg>
-                        <div class="work-card-overlay">
-                            <button class="btn btn-primary preview-project-btn" data-project="day14.html"
-                                data-title="Digital Studio Website">Live Preview</button>
-                        </div>
-                    </div>
-                    <div class="work-card-content">
-                        <h3>Digital Studio Website</h3>
-                        <p>A responsive studio landing page built to present core services, showcase professional
-                            branding, and scale typography models.</p>
-                        <div class="work-badges">
-                            <span class="work-badge">Branding</span>
-                            <span class="work-badge">CSS Flex</span>
-                            <span class="work-badge">Scale</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4: Studio Website 2.0 -->
-                <div class="work-card reveal">
-                    <div class="work-card-media">
-                        <!-- Studio 2.0 visual mockup SVG -->
-                        <svg width="100%" height="100%" viewBox="0 0 300 170" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <rect width="300" height="170" fill="#0c1222" />
-                            <!-- Top stats header -->
-                            <rect x="20" y="15" width="260" height="30" rx="6" fill="#131b2e" stroke="#3b82f6"
-                                stroke-opacity="0.3" />
-                            <circle cx="40" cy="30" r="6" fill="#ff9f1c" />
-                            <rect x="55" y="27" width="50" height="6" rx="2" fill="#f8f9fa" />
-                            <!-- Grid blocks layout -->
-                            <rect x="20" y="55" width="80" height="95" rx="6" fill="#1e293b" />
-                            <rect x="110" y="55" width="80" height="95" rx="6" fill="#1e293b" />
-                            <rect x="200" y="55" width="80" height="95" rx="6" fill="#1e293b" />
-                            <!-- Highlights inside cards -->
-                            <rect x="30" y="70" width="40" height="6" rx="2" fill="#00d2ff" />
-                            <rect x="120" y="70" width="40" height="6" rx="2" fill="#00d2ff" />
-                            <rect x="210" y="70" width="40" height="6" rx="2" fill="#00d2ff" />
-                        </svg>
-                        <div class="work-card-overlay">
-                            <button class="btn btn-primary preview-project-btn" data-project="day15.html"
-                                data-title="Studio Website 2.0">Live Preview</button>
-                        </div>
-                    </div>
-                    <div class="work-card-content">
-                        <h3>Studio Website 2.0</h3>
-                        <p>An upgraded layout integrating custom CSS grid, absolute CTA placement indicators, and highly
-                            reusable design assets.</p>
-                        <div class="work-badges">
-                            <span class="work-badge">CSS Grid</span>
-                            <span class="work-badge">Grid Layouts</span>
-                            <span class="work-badge">Refactored</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Why Choose Us Section -->
-        <section class="choose-section container" id="whychooseus">
-            <div class="section-header reveal">
-                <h2>Why Choose <span>Us</span></h2>
-                <p>We combine design structure and logical code execution to deliver highly effective business websites.
-                </p>
-            </div>
-
-            <div class="choose-grid">
-                <div class="choose-card reveal">
-                    <div class="choose-num">01</div>
-                    <div class="choose-card-info">
-                        <h3>Reliable Structure</h3>
-                        <p>Clean, semantic, and highly organized HTML layout elements built for seamless navigation.</p>
-                    </div>
-                </div>
-
-                <div class="choose-card reveal">
-                    <div class="choose-num">02</div>
-                    <div class="choose-card-info">
-                        <h3>Responsive Design</h3>
-                        <p>Websites designed to adapt and function seamlessly across phones, tablets, and wide monitors.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="choose-card reveal">
-                    <div class="choose-num">03</div>
-                    <div class="choose-card-info">
-                        <h3>Modern Styling</h3>
-                        <p>Stunning typography selections, clean grid layouts, and interactive animations tailored to
-                            impress.</p>
-                    </div>
-                </div>
-
-                <div class="choose-card reveal">
-                    <div class="choose-num">04</div>
-                    <div class="choose-card-info">
-                        <h3>Growth Focused</h3>
-                        <p>Web builds focused entirely on satisfying specific business goals and driving customer
-                            actions.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Statistics Section -->
-        <section class="stats-section container-fluid" id="statistic">
-            <div class="container stats-grid">
-                <div class="stat-item reveal">
-                    <h3 class="counter" data-target="15">0</h3>
-                    <p>Projects Completed</p>
-                </div>
-
-                <div class="stat-item reveal">
-                    <h3 class="counter" data-target="100">0</h3>
-                    <p>Learning Commitment %</p>
-                </div>
-
-                <div class="stat-item reveal">
-                    <h3 class="counter" data-target="24">0</h3>
-                    <p>Support (Hours / Day)</p>
-                </div>
-
-                <div class="stat-item reveal">
-                    <h3 class="counter" data-target="100">0</h3>
-                    <p>Responsive Designs %</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Client Feedback Section -->
-        <section class="feedback-section container" id="testimonials">
-            <div class="section-header reveal">
-                <h2>Client <span>Feedback</span></h2>
-                <p>Here is what our clients and partners say about our design responsiveness and clean frontend
-                    execution.</p>
-            </div>
-
-            <div class="feedback-slider-container reveal">
-                <div class="feedback-wrapper" id="feedback-wrapper">
-                    <!-- Slide 1 -->
-                    <div class="feedback-slide">
-                        <div class="feedback-card">
-                            <div class="feedback-quote-icon">“</div>
-                            <p>The website layout and structure are clean, highly professional, and extremely easy for
-                                our users to navigate. Very pleased with the custom adjustments!</p>
-                            <div class="feedback-author">David Johnson</div>
-                            <div class="feedback-title">Technical Project Lead</div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 2 -->
-                    <div class="feedback-slide">
-                        <div class="feedback-card">
-                            <div class="feedback-quote-icon">“</div>
-                            <p>The responsive design worked beautifully across multiple test devices and maintained
-                                excellent visual consistency. Highly detailed spacing rules!</p>
-                            <div class="feedback-author">Sophia Carter</div>
-                            <div class="feedback-title">Product Manager, Venture Tech</div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 3 -->
-                    <div class="feedback-slide">
-                        <div class="feedback-card">
-                            <div class="feedback-quote-icon">“</div>
-                            <p>Excellent communication and execution. The resulting project displays high attention to
-                                modern design structures and responsive styling principles.</p>
-                            <div class="feedback-author">Michael Brown</div>
-                            <div class="feedback-title">Creative Director, Alpha Media</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slider-controls">
-                    <button class="slider-arrow" id="prev-slide" aria-label="Previous Testimonial">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12 19 5 12 12 5"></polyline>
-                        </svg>
-                    </button>
-                    <div class="slider-dots" id="slider-dots"></div>
-                    <button class="slider-arrow" id="next-slide" aria-label="Next Testimonial">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="contact-section container" id="contacts">
-            <div class="section-header reveal">
-                <h2>Contact <span>Us</span></h2>
-                <p>Have an interesting project, custom business requirement, or design query? Fill out the form or reach
-                    out directly.</p>
-            </div>
-
-            <div class="contact-section-split reveal">
-                <!-- Info Panel -->
-                <div class="contact-info-panel">
-                    <div class="contact-item">
-                        <div class="contact-item-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
-                                </path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
+                <div class="services-grid">
+                    <!-- Card 1 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" />
+                                <line x1="8" y1="21" x2="16" y2="21" />
+                                <line x1="12" y1="17" x2="12" y2="21" />
                             </svg>
                         </div>
-                        <div class="contact-item-details">
-                            <h4>Email Address</h4>
-                            <p><a href="mailto:hello@sekanistudio.com">hello@sekanistudio.com</a></p>
-                        </div>
+                        <h3>Responsive Web Design</h3>
+                        <p>Professional websites designed to adapt smoothly across desktops, tablets, and mobile devices
+                            while maintaining a consistent user experience.</p>
                     </div>
-
-                    <div class="contact-item">
-                        <div class="contact-item-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                    <!-- Card 2 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
                             </svg>
                         </div>
-                        <div class="contact-item-details">
-                            <h4>Phone Support</h4>
-                            <p><a href="tel:+2349154516012">+2349154516012</a></p>
-                        </div>
+                        <h3>Frontend Development</h3>
+                        <p>Structured frontend systems built using semantic HTML, reusable CSS components, and
+                            responsive layouts with clean JavaScript logic.</p>
                     </div>
-
-                    <div class="contact-item">
-                        <div class="contact-item-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
-                                <circle cx="12" cy="10" r="3"></circle>
+                    <!-- Card 3 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="2" />
+                                <path
+                                    d="M20.188 10.934c.313.923.312 1.922-.001 2.845L22 16l-2.667 1.5c-.626.817-1.47 1.443-2.45 1.802L16 21h-4l-.884-1.698c-.98-.359-1.824-.985-2.45-1.802L6 16l1.813-2.221c-.313-.923-.312-1.922.001-2.845L6 8l2.667-1.5c.626-.817 1.47-1.443 2.45-1.802L12 3h4l.884 1.698c.98.359 1.824.985 2.45 1.802L22 8l-1.812 2.934z" />
                             </svg>
                         </div>
-                        <div class="contact-item-details">
-                            <h4>Studio Location</h4>
-                            <p>Lagos, Nigeria</p>
+                        <h3>UI Styling</h3>
+                        <p>Modern typography, spacing, hover effects, and visual hierarchy designed to improve usability
+                            and engagement across your interface.</p>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                <polyline points="9 22 9 12 15 12 15 22" />
+                            </svg>
+                        </div>
+                        <h3>Landing Page Development</h3>
+                        <p>Business-focused landing pages created to showcase products, services, and brand identity
+                            professionally and drive conversions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Featured Projects ───────────────────────────── -->
+        <section class="projects-section" id="projects">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-label">Our Work</div>
+                    <h2>Featured <span>Projects</span></h2>
+                    <p>Explore the projects marking our frontend development journey — each crafted to solve real design
+                        challenges.</p>
+                </div>
+
+                <div class="projects-grid">
+
+                    <!-- Project 1: Developer Portfolio -->
+                    <div class="project-card reveal">
+                        <div class="project-thumb">
+                            <svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="170" fill="#0c1222" />
+                                <rect x="15" y="15" width="40" height="8" rx="2" fill="#6366f1" fill-opacity=".6" />
+                                <rect x="230" y="15" width="55" height="8" rx="2" fill="#3b82f6" fill-opacity=".3" />
+                                <circle cx="60" cy="80" r="25" fill="#00d2ff" fill-opacity=".18" stroke="#00d2ff"
+                                    stroke-width="1.5" />
+                                <rect x="100" y="65" width="120" height="10" rx="3" fill="#f8f9fa" />
+                                <rect x="100" y="85" width="160" height="6" rx="2" fill="#9ca3af" />
+                                <rect x="100" y="97" width="90" height="6" rx="2" fill="#9ca3af" />
+                                <rect x="25" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                    stroke-opacity=".4" />
+                                <rect x="115" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                    stroke-opacity=".4" />
+                                <rect x="205" y="130" width="70" height="25" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                    stroke-opacity=".4" />
+                            </svg>
+                            <div class="project-overlay">
+                                <a href="day16.html" target="_blank" rel="noopener" class="btn btn-primary"
+                                    style="font-size:.85rem;padding:10px 20px;">Live Preview</a>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Developer Portfolio</h3>
+                            <p>A responsive portfolio website showcasing frontend skills, reusable card systems, and
+                                structured content organization.</p>
+                            <div class="project-tags">
+                                <span class="tag">HTML5</span>
+                                <span class="tag">CSS Grid</span>
+                                <span class="tag">Responsive</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div>
-                        <h4
-                            style="font-family: 'Outfit', sans-serif; margin-bottom: 15px; font-size: 1.1rem; font-weight: 600;">
-                            Connect With Us</h4>
-                        <div class="social-links-grid">
-                            <a href="https://github.com/Websekani03" class="social-link-item" aria-label="GitHub">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
+                    <!-- Project 2: Modern Contact Interface -->
+                    <div class="project-card reveal">
+                        <div class="project-thumb">
+                            <svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="170" fill="#0c1222" />
+                                <rect x="60" y="20" width="180" height="130" rx="8" fill="#131b2e" stroke="#00d2ff"
+                                    stroke-opacity=".35" />
+                                <rect x="80" y="35" width="60" height="8" rx="2" fill="#f8f9fa" />
+                                <rect x="80" y="55" width="140" height="14" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                    stroke-opacity=".3" />
+                                <rect x="80" y="77" width="140" height="14" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                    stroke-opacity=".3" />
+                                <rect x="80" y="99" width="140" height="24" rx="4" fill="#1e293b" stroke="#3b82f6"
+                                    stroke-opacity=".3" />
+                                <rect x="120" y="130" width="60" height="10" rx="5" fill="#00d2ff" />
+                            </svg>
+                            <div class="project-overlay">
+                                <a href="day12.html" target="_blank" rel="noopener" class="btn btn-primary"
+                                    style="font-size:.85rem;padding:10px 20px;">Live Preview</a>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Modern Contact Interface</h3>
+                            <p>A professional contact form project featuring hover effects, focus states, and improved
+                                user interaction principles.</p>
+                            <div class="project-tags">
+                                <span class="tag">Forms</span>
+                                <span class="tag">UI States</span>
+                                <span class="tag">Transitions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: Digital Studio Website -->
+                    <div class="project-card reveal">
+                        <div class="project-thumb">
+                            <svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="170" fill="#0c1222" />
+                                <rect x="20" y="30" width="120" height="14" rx="3" fill="#6366f1" fill-opacity=".7" />
+                                <rect x="20" y="52" width="110" height="8" rx="2" fill="#9ca3af" />
+                                <rect x="20" y="66" width="90" height="8" rx="2" fill="#9ca3af" />
+                                <rect x="20" y="85" width="50" height="14" rx="7" fill="#00d2ff" />
+                                <rect x="160" y="30" width="120" height="110" rx="8" fill="#1e293b" stroke="#3b82f6"
+                                    stroke-opacity=".3" />
+                                <circle cx="220" cy="85" r="22" fill="#3b82f6" fill-opacity=".15" />
+                                <path d="M180 120 L210 90 L240 115 L260 100 L280 125" stroke="#00d2ff" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                            <div class="project-overlay">
+                                <a href="day14.html" target="_blank" rel="noopener" class="btn btn-primary"
+                                    style="font-size:.85rem;padding:10px 20px;">Live Preview</a>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Digital Studio Website</h3>
+                            <p>A business landing page designed to practice branding, service presentation, and
+                                responsive layout technique.</p>
+                            <div class="project-tags">
+                                <span class="tag">Branding</span>
+                                <span class="tag">Flexbox</span>
+                                <span class="tag">Scale</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Studio Website 2.0 -->
+                    <div class="project-card reveal">
+                        <div class="project-thumb">
+                            <svg viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="170" fill="#0c1222" />
+                                <rect x="20" y="15" width="260" height="30" rx="6" fill="#131b2e" stroke="#3b82f6"
+                                    stroke-opacity=".3" />
+                                <circle cx="40" cy="30" r="6" fill="#ff9f1c" />
+                                <rect x="55" y="27" width="50" height="6" rx="2" fill="#f8f9fa" />
+                                <rect x="20" y="55" width="80" height="95" rx="6" fill="#1e293b" />
+                                <rect x="110" y="55" width="80" height="95" rx="6" fill="#1e293b" />
+                                <rect x="200" y="55" width="80" height="95" rx="6" fill="#1e293b" />
+                                <rect x="30" y="72" width="40" height="6" rx="2" fill="#00d2ff" />
+                                <rect x="120" y="72" width="40" height="6" rx="2" fill="#00d2ff" />
+                                <rect x="210" y="72" width="40" height="6" rx="2" fill="#00d2ff" />
+                            </svg>
+                            <div class="project-overlay">
+                                <a href="day15.html" target="_blank" rel="noopener" class="btn btn-primary"
+                                    style="font-size:.85rem;padding:10px 20px;">Live Preview</a>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Studio Website 2.0</h3>
+                            <p>An improved agency website combining Grid, Flexbox, reusable components, and responsive
+                                design systems.</p>
+                            <div class="project-tags">
+                                <span class="tag">CSS Grid</span>
+                                <span class="tag">Refactored</span>
+                                <span class="tag">Components</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Pricing Plans ───────────────────────────────── -->
+        <section class="pricing-section" id="pricing">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-label">Pricing</div>
+                    <h2>Pricing <span>Plans</span> ⭐</h2>
+                    <p>Transparent, flexible pricing designed to fit every stage of your business and project scope.</p>
+                </div>
+
+                <div class="pricing-grid">
+
+                                        <!-- Starter Plan -->
+                    <div class="pricing-card reveal">
+                        <div class="pricing-name">Starter Plan</div>
+                        <div class="pricing-desc">Perfect for small businesses and independent professionals needing a complete, multi-page web presence.</div>
+                        <div class="pricing-price">
+                            <span class="currency">$</span><span class="amount">149</span><span class="period">/ project</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> Multi-page layout (Up to 3 essential pages)</li>
+                            <li><span class="check">✓</span> Mobile-first responsive design</li>
+                            <li><span class="check">✓</span> Basic animations & transitions</li>
+                            <li><span class="check">✓</span> Standard contact form integration</li>
+                            <li><span class="check">✓</span> 7-day delivery (Domain & hosting excluded)</li>
+                        </ul>
+                        <button class="btn-plan btn-plan-outline"
+                            onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Choose
+                            Plan</button>
+                    </div>
+
+                    <!-- Professional (Featured) -->
+                    <div class="pricing-card featured reveal">
+                        <div class="pricing-badge">Most Popular</div>
+                        <div class="pricing-name">Professional Plan</div>
+                        <div class="pricing-desc">Ideal for growing brands seeking full business websites with advanced lead generation and integrations.</div>
+                        <div class="pricing-price">
+                            <span class="currency" style="color:var(--cyan)">$</span><span class="amount"
+                                style="background:linear-gradient(135deg,var(--cyan),var(--indigo));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">399</span><span
+                                class="period">/ project</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> Expanded multi-page layout (Up to 8 pages)</li>
+                            <li><span class="check">✓</span> Custom UI design using established frameworks</li>
+                            <li><span class="check">✓</span> Advanced animations & micro-interactions</li>
+                            <li><span class="check">✓</span> Google Calendar or Paystack setup</li>
+                            <li><span class="check">✓</span> Basic On-Page SEO (Meta tags & alt text)</li>
+                            <li><span class="check">✓</span> 14-day delivery + 2 revision rounds</li>
+                        </ul>
+                        <button class="btn-plan btn-plan-filled"
+                            onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Choose
+                            Plan</button>
+                    </div>
+
+                    <!-- Premium -->
+                    <div class="pricing-card reveal">
+                        <div class="pricing-name">Premium Plan</div>
+                        <div class="pricing-desc">Advanced web solutions designed for brands looking to establish a highly interactive, custom digital presence.</div>
+                        <div class="pricing-price">
+                            <span class="currency">$</span><span class="amount">799</span><span class="period">/
+                                project</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="check">✓</span> Enterprise corporate web (Up to 20 pages)</li>
+                            <li><span class="check">✓</span> Bespoke design system & style guide</li>
+                            <li><span class="check">✓</span> Node.js API integration (up to 3 core features)</li>
+                            <li><span class="check">✓</span> Automated email workflows + payment gateway</li>
+                            <li><span class="check">✓</span> Performance, speed & accessibility audit</li>
+                            <li><span class="check">✓</span> 21-day delivery + 3 revision rounds</li>
+                        </ul>
+                        <button class="btn-plan btn-plan-outline"
+                            onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Choose
+                            Plan</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ── Statistics ──────────────────────────────────── -->
+        <section class="stats-section" id="statistics">
+            <div class="container">
+                <div class="section-head reveal" style="margin-bottom:48px;">
+                    <div class="section-label">By The Numbers</div>
+                    <h2><span>Statistics</span></h2>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item reveal">
+                        <div class="stat-num">16+</div>
+                        <div class="stat-label">Frontend Projects</div>
+                        <div class="stat-sub">Built in a structured daily practice</div>
+                    </div>
+                    <div class="stat-item reveal">
+                        <div class="stat-num">100%</div>
+                        <div class="stat-label">Daily Learning</div>
+                        <div class="stat-sub">Consistent project-based skill development</div>
+                    </div>
+                    <div class="stat-item reveal">
+                        <div class="stat-num">100%</div>
+                        <div class="stat-label">Responsive Focus</div>
+                        <div class="stat-sub">Building mobile-friendly experiences</div>
+                    </div>
+                    <div class="stat-item reveal">
+                        <div class="stat-num">↑</div>
+                        <div class="stat-label">Growing</div>
+                        <div class="stat-sub">Progressing toward full-stack development</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Client Testimonials ─────────────────────────── -->
+        <section class="testimonials-section" id="testimonials">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-label">Client Feedback</div>
+                    <h2>Client <span>Testimonials</span></h2>
+                    <p>What our clients and collaborators say about our design responsiveness and clean frontend
+                        execution.</p>
+                </div>
+
+                <div class="testimonials-grid">
+
+                    <div class="testimonial-card reveal">
+                        <div class="stars">★★★★★</div>
+                        <span class="quote-mark">"</span>
+                        <p>The website structure felt clean, modern, and easy to navigate across devices. Excellent
+                            attention to spacing and visual hierarchy throughout.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">EJ</div>
+                            <div>
+                                <div class="author-name">Emily Johnson</div>
+                                <div class="author-role">Product Owner, Venture Tech</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card reveal">
+                        <div class="stars">★★★★★</div>
+                        <span class="quote-mark">"</span>
+                        <p>The interface design and responsiveness created a professional browsing experience. The
+                            micro-animations were a delightful touch throughout.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">DB</div>
+                            <div>
+                                <div class="author-name">Daniel Brooks</div>
+                                <div class="author-role">Technical Lead, Alpha Media</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card reveal">
+                        <div class="stars">★★★★★</div>
+                        <span class="quote-mark">"</span>
+                        <p>Excellent spacing, organization, and visual consistency throughout the project. The
+                            responsive design worked beautifully across all my test devices.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SC</div>
+                            <div>
+                                <div class="author-name">Sophia Carter</div>
+                                <div class="author-role">Creative Director</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Contact Section ─────────────────────────────── -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-label">Get In Touch</div>
+                    <h2>Contact <span>Us</span></h2>
+                    <p>Have an interesting project or design query? Fill out the form or reach out directly.</p>
+                </div>
+
+                <div class="contact-grid reveal">
+                    <!-- Info Panel -->
+                    <div class="contact-info">
+                        <h3>Let's Build Something Great</h3>
+                        <p>Whether it's a full agency site, a landing page, or a UI overhaul — we're here to help you
+                            get it right.</p>
+
+                        <div class="contact-items">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                        <polyline points="22,6 12,13 2,6" />
+                                    </svg>
+                                </div>
+                                <div class="contact-detail">
+                                    <h4>Email Address</h4>
+                                    <a href="mailto:hello@sekanistudio.com">hello@sekanistudio.com</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                                        <line x1="12" y1="18" x2="12.01" y2="18" />
+                                    </svg>
+                                </div>
+                                <div class="contact-detail">
+                                    <h4>Phone Support</h4>
+                                    <a href="tel:+2349154516012">+234 915 451 6012</a>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                </div>
+                                <div class="contact-detail">
+                                    <h4>Studio Location</h4>
+                                    <p>Lagos, Nigeria</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-row">
+                            <a href="https://github.com/Websekani03" class="social-btn" aria-label="GitHub"
+                                target="_blank" rel="noopener">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
                                     <path
-                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                                    </path>
+                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                                 </svg>
                             </a>
-                            <a href="https://www.linkedin.com/in/arinze-chukwuma-167644377?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
-                                class="social-link-item" aria-label="LinkedIn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
+                            <a href="https://www.linkedin.com/in/arinze-chukwuma-167644377" class="social-btn"
+                                aria-label="LinkedIn" target="_blank" rel="noopener">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
                                     <path
-                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                                    </path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                    <rect x="2" y="9" width="4" height="12" />
+                                    <circle cx="4" cy="4" r="2" />
                                 </svg>
                             </a>
-                            <a href="https://x.com/rnsekani?s=21" class="social-link-item" aria-label="X">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="currentColor">
+                            <a href="https://x.com/rnsekani" class="social-btn" aria-label="X / Twitter" target="_blank"
+                                rel="noopener">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                                     <path
                                         d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                                 </svg>
                             </a>
-
-                            <a href="https://www.instagram.com/kvug03/" class="social-link-item" aria-label="Instagram">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            <a href="https://www.instagram.com/kvug03/" class="social-btn" aria-label="Instagram"
+                                target="_blank" rel="noopener">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                                 </svg>
                             </a>
                         </div>
                     </div>
-                </div>
 
-                <!-- Form Panel -->
-                <div class="contact-form-panel">
-                    <form id="contact-form" class="my-form">
-                        <div class="form-group">
-                            <input type="text" id="fname" name="fname" placeholder=" " required>
-                            <label for="fname">Full Name</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder=" " required>
-                            <label for="email">Email Address</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" id="bname" name="bname" placeholder=" ">
-                            <label for="bname">Business Name</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="date" id="booking-date" name="date" placeholder=" ">
-                            <label for="booking-date">Preferred Date</label>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="time" id="booking-time" name="time" placeholder=" ">
-                            <label for="booking-time">Preferred Time</label>
-                        </div>
-
-                        <div class="form-group">
-                            <select name="nservice" id="nservice" required>
-                                <option value="" disabled selected></option>
-                                <option value="Website Design">Website Design</option>
-                                <option value="Frontend Development">Frontend Development</option>
-                                <option value="Landing Page">Landing Page</option>
-                                <option value="UI Styling">UI Styling</option>
-                                <option value="Consultations">Consultations</option>
-                            </select>
-                            <label for="nservice">Service Needed</label>
-                        </div>
-
-                        <div class="form-group">
-                            <select name="budget" id="budget" required>
-                                <option value="" disabled selected></option>
-                                <option value="Small Project">Small Project</option>
-                                <option value="Medium Project">Medium Project</option>
-                                <option value="Large Project">Large Project</option>
-                            </select>
-                            <label for="budget">Project Budget</label>
-                        </div>
-
-                        <div class="form-group">
-                            <textarea name="desc" id="desc" placeholder=" " required></textarea>
-                            <label for="desc">Short description of project</label>
-                        </div>
-
-                        <div class="agreement-group">
-                            <input type="checkbox" id="agreement" name="agreement" required>
-                            <label for="agreement">I agree to the <a href="terms.html" target="_blank">Terms &
-                                    Conditions</a> and <a href="privacy.html" target="_blank">Privacy Policy</a></label>
-                        </div>
-
-                        <div class="form-buttons">
-                            <button type="submit" id="b1" class="btn btn-primary">Send Inquiry</button>
-                            <button type="button" id="b2" class="btn btn-secondary">Book Consultation</button>
-                        </div>
-                    </form>
+                    <!-- Form Panel — reused from index.html -->
+                    <div class="contact-form-wrap">
+                        <form id="contact-form" novalidate>
+                            <div class="form-row-2">
+                                <div class="field-group">
+                                    <label for="fname">Full Name *</label>
+                                    <input type="text" id="fname" name="fname" placeholder="Your full name" required>
+                                </div>
+                                <div class="field-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label for="bname">Business Name</label>
+                                <input type="text" id="bname" name="bname" placeholder="Your business (optional)">
+                            </div>
+                            <div class="form-row-2">
+                                <div class="field-group">
+                                    <label for="nservice">Service Needed *</label>
+                                    <select id="nservice" name="nservice" required>
+                                        <option value="" disabled selected></option>
+                                        <option value="Website Design">Website Design</option>
+                                        <option value="Frontend Development">Frontend Development</option>
+                                        <option value="Landing Page">Landing Page</option>
+                                        <option value="UI Styling">UI Styling</option>
+                                        <option value="Consultations">Consultations</option>
+                                    </select>
+                                </div>
+                                <div class="field-group">
+                                    <label for="budget">Project Budget *</label>
+                                    <select id="budget" name="budget" required>
+                                        <option value="" disabled selected></option>
+                                        <option value="Small Project">Small Project</option>
+                                        <option value="Medium Project">Medium Project</option>
+                                        <option value="Large Project">Large Project</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label for="desc">Project Description *</label>
+                                <textarea id="desc" name="desc" placeholder="Briefly describe your project..."
+                                    required></textarea>
+                            </div>
+                            <div class="agree-group">
+                                <input type="checkbox" id="agreement" name="agreement" required>
+                                <label for="agreement">I agree to the <a href="terms.html" target="_blank">Terms &amp;
+                                        Conditions</a> and <a href="privacy.html" target="_blank">Privacy
+                                        Policy</a></label>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" id="contact-submit" class="btn btn-primary" style="flex:1;">
+                                    <span id="contact-btn-text">Send Inquiry</span>
+                                </button>
+                                <a href="#booking" class="btn btn-outline">Book Consultation</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- ── Booking Section ────────────────────────────── -->
+        <section class="booking-section" id="booking">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-label">Schedule a Call</div>
+                    <h2>Book a <span>Free Consultation</span></h2>
+                    <p>Schedule a 1-hour call — you'll receive a Google Calendar invite with a Google Meet link directly
+                        in your inbox.</p>
+                </div>
+
+                <div class="booking-inner">
+                    <div class="booking-form-wrap reveal">
+                        <form id="booking-form" novalidate>
+                            <div class="form-row-2">
+                                <div class="field-group">
+                                    <label for="booking-name">Full Name *</label>
+                                    <input type="text" id="booking-name" name="name" placeholder="Your full name"
+                                        required>
+                                </div>
+                                <div class="field-group">
+                                    <label for="booking-email">Email Address *</label>
+                                    <input type="email" id="booking-email" name="email" placeholder="your@email.com"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-row-2">
+                                <div class="field-group">
+                                    <label for="booking-date">Preferred Date *</label>
+                                    <input type="date" id="booking-date" name="date" required>
+                                </div>
+                                <div class="field-group">
+                                    <label for="booking-time">Preferred Time *</label>
+                                    <input type="time" id="booking-time" name="time" required>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <label for="booking-service">Service of Interest</label>
+                                <select id="booking-service" name="service">
+                                    <option value="">Select a service...</option>
+                                    <option value="Responsive Web Design">Responsive Web Design</option>
+                                    <option value="Frontend Development">Frontend Development</option>
+                                    <option value="UI Styling">UI Styling</option>
+                                    <option value="Landing Page">Landing Page</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label for="booking-notes">Additional Notes</label>
+                                <textarea id="booking-notes" name="notes" rows="3"
+                                    placeholder="Anything you'd like to discuss..."></textarea>
+                            </div>
+
+                            <button type="submit" id="booking-submit" class="btn btn-primary"
+                                style="width:100%;justify-content:center;padding:15px;font-size:1rem;">
+                                <span id="btn-text">📅 Book Consultation</span>
+                            </button>
+
+                            <div id="booking-message" class="booking-message" aria-live="polite"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Footer Section -->
+    <!-- ── Footer ─────────────────────────────────────────── -->
     <footer>
-        <div class="footer-content">
-            <a href="#home" class="footer-logo">
-                <span>Sekani</span>Studio
-            </a>
-
-            <ul class="footer-links">
-                <li><a href="terms.html" target="_blank">Terms & Conditions</a></li>
-                <li><a href="privacy.html" target="_blank">Privacy Policy</a></li>
-            </ul>
-
-            <p class="footer-desc">Building highly responsive, modern digital experiences through clean frontend
-                structures, beautiful UI styles, and logical coding principles.</p>
+        <div class="footer-inner">
+            <a href="#home" class="logo"><span>Sekani</span>Studio</a>
             <p class="footer-copy">&copy; 2026 Sekani Digital Studio. All rights reserved.</p>
+            <nav class="footer-links">
+                <a href="terms.html" target="_blank">Terms</a>
+                <a href="privacy.html" target="_blank">Privacy</a>
+                <a href="index.html">Main Site</a>
+            </nav>
         </div>
     </footer>
 
-    <!-- Project Preview Modal -->
-    <div class="project-modal" id="project-modal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <div class="modal-window-title">
-                    <span class="modal-dot red"></span>
-                    <span class="modal-dot yellow"></span>
-                    <span class="modal-dot green"></span>
-                    <span id="modal-project-title" style="margin-left: 10px;">Project Preview</span>
-                </div>
-                <div class="modal-actions">
-                    <button class="modal-action-btn modal-close-btn" id="modal-close" aria-label="Close Preview">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="modal-body">
-                <iframe class="modal-iframe" id="modal-iframe" src="about:blank"></iframe>
-            </div>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon" id="toast-icon">✓</div>
+        <div>
+            <div class="toast-title" id="toast-title">Success!</div>
+            <div class="toast-msg" id="toast-msg">Your message was sent.</div>
         </div>
     </div>
 
-    <!-- Success Notification Toast -->
-    <div class="toast-notification" id="toast-notification">
-        <div class="toast-icon">✓</div>
-        <div class="toast-content">
-            <h5 id="toast-title">Submission Successful</h5>
-            <p id="toast-message">We have received your inquiry. Our team will contact you shortly!</p>
-        </div>
-    </div>
+    <!-- ── Scripts ────────────────────────────────────────── -->
+    <script>
+        "use strict";
 
-    <!-- Custom Logic Script -->
-    <script src="js/day16.js"></script>
+        // ── Scroll progress bar ───────────────────────────────
+        const progressBar = document.getElementById("scroll-progress");
+        window.addEventListener("scroll", () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            progressBar.style.width = scrolled + "%";
+        }, { passive: true });
+
+        // ── Navbar scroll shadow ──────────────────────────────
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+            navbar.classList.toggle("scrolled", window.scrollY > 40);
+        }, { passive: true });
+
+        // ── Mobile menu toggle ────────────────────────────────
+        const navToggle = document.getElementById("nav-toggle");
+        const navLinks = document.getElementById("nav-links");
+        navToggle.addEventListener("click", () => {
+            navToggle.classList.toggle("open");
+            navLinks.classList.toggle("open");
+        });
+        navLinks.querySelectorAll("a").forEach(a => {
+            a.addEventListener("click", () => {
+                navToggle.classList.remove("open");
+                navLinks.classList.remove("open");
+            });
+        });
+
+        // ── Active nav link on scroll ─────────────────────────
+        const sections = document.querySelectorAll("section[id], header[id]");
+        const navAnchors = document.querySelectorAll(".nav-links a");
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    navAnchors.forEach(a => {
+                        a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: "-40% 0px -55% 0px" });
+        sections.forEach(s => observer.observe(s));
+
+        // ── Reveal on scroll ──────────────────────────────────
+        const revealEls = document.querySelectorAll(".reveal");
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add("visible"), i * 80);
+                    revealObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach(el => revealObserver.observe(el));
+
+        // ── Min date for booking ──────────────────────────────
+        const dateInput = document.getElementById("booking-date");
+        if (dateInput) {
+            dateInput.setAttribute("min", new Date().toISOString().split("T")[0]);
+        }
+
+        // ── Toast helper ─────────────────────────────────────
+        function showToast(type, title, msg) {
+            const toast = document.getElementById("toast");
+            const iconEl = document.getElementById("toast-icon");
+            const titleEl = document.getElementById("toast-title");
+            const msgEl = document.getElementById("toast-msg");
+            titleEl.textContent = title;
+            msgEl.textContent = msg;
+            if (type === "error") {
+                toast.style.borderColor = "#ef4444";
+                iconEl.style.background = "linear-gradient(135deg,#ef4444,#dc2626)";
+                iconEl.textContent = "!";
+            } else {
+                toast.style.borderColor = "";
+                iconEl.style.background = "";
+                iconEl.textContent = "✓";
+            }
+            toast.classList.add("show");
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove("show"), 5000);
+        }
+
+        // ── Contact Form ──────────────────────────────────────
+        const contactForm = document.getElementById("contact-form");
+        const contactBtn = document.getElementById("contact-submit");
+        const contactTxt = document.getElementById("contact-btn-text");
+
+        if (contactForm) {
+            contactForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+                const data = {
+                    fname: document.getElementById("fname").value.trim(),
+                    email: document.getElementById("email").value.trim(),
+                    bname: document.getElementById("bname").value.trim(),
+                    nservice: document.getElementById("nservice").value,
+                    budget: document.getElementById("budget").value,
+                    desc: document.getElementById("desc").value.trim(),
+                };
+                if (!data.fname || !data.email || !data.nservice || !data.budget || !data.desc) {
+                    showToast("error", "Missing Fields", "Please fill in all required fields.");
+                    return;
+                }
+                const origHTML = contactBtn.innerHTML;
+                contactBtn.disabled = true;
+                contactTxt.textContent = "Sending…";
+                try {
+                    const res = await fetch("/api/contact", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(data),
+                    });
+                    const json = await res.json();
+                    if (json.success) {
+                        contactForm.reset();
+                        showToast("success", "Inquiry Sent!", json.message || "We'll get back to you shortly.");
+                    } else {
+                        showToast("error", "Send Failed", json.message || "Something went wrong. Try again.");
+                    }
+                } catch (err) {
+                    showToast("error", "Network Error", "Check your connection and try again.");
+                } finally {
+                    contactBtn.disabled = false;
+                    contactBtn.innerHTML = origHTML;
+                }
+            });
+        }
+
+        // ── Booking Form ──────────────────────────────────────
+        const bookingForm = document.getElementById("booking-form");
+        const bookingBtn = document.getElementById("booking-submit");
+        const bookingTxt = document.getElementById("btn-text");
+        const bookingMsg = document.getElementById("booking-message");
+
+        if (bookingForm) {
+            bookingForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+                bookingMsg.textContent = "";
+                bookingMsg.className = "booking-message";
+
+                const payload = {
+                    name: document.getElementById("booking-name").value.trim(),
+                    email: document.getElementById("booking-email").value.trim(),
+                    date: document.getElementById("booking-date").value,
+                    time: document.getElementById("booking-time").value,
+                    service: document.getElementById("booking-service").value,
+                    notes: document.getElementById("booking-notes").value.trim(),
+                };
+
+                if (!payload.name || !payload.email || !payload.date || !payload.time) {
+                    bookingMsg.textContent = "Please fill in your name, email, date, and time.";
+                    bookingMsg.classList.add("error");
+                    return;
+                }
+
+                bookingBtn.disabled = true;
+                bookingTxt.textContent = "⏳ Booking…";
+
+                try {
+                    const res = await fetch("/api/book-consultation", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload),
+                    });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        bookingMsg.classList.add("success");
+                        bookingMsg.innerHTML =
+                            "<strong>✅ Consultation booked!</strong><br>" +
+                            "Check your inbox for the Google Calendar invite.<br>" +
+                            (data.meetLink
+                                ? "📹 <a href='" + data.meetLink + "' target='_blank' rel='noopener'>Open Google Meet link</a>"
+                                : "");
+                        bookingForm.reset();
+                    } else {
+                        bookingMsg.classList.add("error");
+                        bookingMsg.textContent = data.message || "Something went wrong. Please try again.";
+                    }
+                } catch (err) {
+                    bookingMsg.classList.add("error");
+                    bookingMsg.textContent = "Network error. Check your connection and try again.";
+                } finally {
+                    bookingBtn.disabled = false;
+                    bookingTxt.textContent = "📅 Book Consultation";
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
