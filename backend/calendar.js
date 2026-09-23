@@ -130,27 +130,10 @@ async function bookConsultation(req, res) {
             timeZone: "Africa/Lagos",
         },
 
-        // conferenceData — forces Google to generate a Meet link
-        // IMPORTANT: conferenceDataVersion: 1 MUST also be set in the insert() call
-        conferenceData: {
-            createRequest: {
-                requestId: `sekani-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-                conferenceSolutionKey: {
-                    type: "hangoutsMeet",
-                },
-            },
-        },
-
-        reminders: {
-            useDefault: false,
-            overrides: [
-                { method: "email", minutes: 24 * 60 },
-                { method: "email", minutes: 30 },
-                { method: "popup", minutes: 10 },
-            ],
-        },
-
         colorId: "9", // Blueberry (dark blue)
+        // NOTE: conferenceData (Meet link generation) is intentionally omitted.
+        // Service accounts on a personal @gmail.com domain cannot create Meet links
+        // without Domain-Wide Delegation.
     };
 
     // 4. Insert the event via the Calendar API
@@ -161,28 +144,21 @@ async function bookConsultation(req, res) {
         const response = await calendar.events.insert({
             calendarId,
             resource: event,
-            // CRITICAL: Must be 1 to generate the Meet link
-            conferenceDataVersion: 1,
             // sendUpdates omitted — no attendees to notify
         });
 
         const created = response.data;
-        const meetLink =
-            created.conferenceData?.entryPoints?.find(
-                (ep) => ep.entryPointType === "video"
-            )?.uri || null;
 
         console.log(`[Calendar] Event created: ${created.id}`);
         console.log(`[Calendar]    Client: ${name} <${email}>`);
         console.log(`[Calendar]    Time:   ${startDateTime.toLocaleString()}`);
-        console.log(`[Calendar]    Meet:   ${meetLink ?? "not generated"}`);
+        console.log(`[Calendar]    URL:    ${created.htmlLink}`);
 
         return res.status(200).json({
             success: true,
-            message: "Consultation booked! Check your email for the Google Calendar invite with a Google Meet link.",
+            message: "Consultation booked! You will receive a confirmation shortly.",
             eventId: created.id,
             eventUrl: created.htmlLink,
-            meetLink: meetLink,
             start: startDateTime.toISOString(),
             end: endDateTime.toISOString(),
         });
