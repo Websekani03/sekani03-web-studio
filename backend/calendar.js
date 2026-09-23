@@ -105,13 +105,16 @@ async function bookConsultation(req, res) {
     const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000); // +1 hour
 
     // 3. Build the Calendar Event resource
+    // NOTE: attendees field is intentionally omitted — service accounts without
+    // Domain-Wide Delegation cannot invite attendees (throws 403). The client's
+    // contact details are captured in the description instead.
     const event = {
-        summary: `Consultation with ${name} � Sekani Studio`,
+        summary: `Consultation with ${name} — Sekani Studio`,
         description: [
-            `Client Name: ${name}`,
-            `Client Email: ${email}`,
-            service ? `Service of Interest: ${service}` : null,
-            notes ? `Additional Notes:\n${notes}` : null,
+            `Client Name:    ${name}`,
+            `Client Email:   ${email}`,
+            service ? `Service:        ${service}` : null,
+            notes   ? `Notes:\n${notes}` : null,
             "",
             "Booked via Sekani Studio booking form.",
         ]
@@ -127,12 +130,7 @@ async function bookConsultation(req, res) {
             timeZone: "Africa/Lagos",
         },
 
-        // Google automatically emails a Calendar invite to every attendee listed here
-        attendees: [
-            { email: email, displayName: name },
-        ],
-
-        // conferenceData � forces Google to generate a Meet link
+        // conferenceData — forces Google to generate a Meet link
         // IMPORTANT: conferenceDataVersion: 1 MUST also be set in the insert() call
         conferenceData: {
             createRequest: {
@@ -165,8 +163,7 @@ async function bookConsultation(req, res) {
             resource: event,
             // CRITICAL: Must be 1 to generate the Meet link
             conferenceDataVersion: 1,
-            // "all" = Google emails the calendar invite to all attendees automatically
-            sendUpdates: "all",
+            // sendUpdates omitted — no attendees to notify
         });
 
         const created = response.data;
