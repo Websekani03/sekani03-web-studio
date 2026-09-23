@@ -738,6 +738,111 @@
         }
 
         /* ═══════════════════════════════════════════════
+           TECH LOGO MARQUEE (INFINITE TICKER)
+        ═══════════════════════════════════════════════ */
+        .tech-marquee-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 52px;
+            padding: 16px 0;
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 70px, #000 calc(100% - 70px), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 70px, #000 calc(100% - 70px), transparent 100%);
+        }
+
+        .tech-marquee-wrapper::before,
+        .tech-marquee-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 90px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .tech-marquee-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, var(--navy), transparent);
+        }
+
+        .tech-marquee-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, var(--navy), transparent);
+        }
+
+        .tech-marquee-track {
+            display: flex;
+            width: max-content;
+            will-change: transform;
+            animation: techMarqueeLoop 42s linear infinite;
+        }
+
+        .tech-marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .tech-marquee-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-right: 14px;
+            flex-shrink: 0;
+        }
+
+        .marquee-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 18px;
+            background: rgba(19, 27, 46, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            user-select: none;
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        border-color 0.25s ease,
+                        background 0.25s ease,
+                        box-shadow 0.25s ease,
+                        color 0.25s ease;
+        }
+
+        .marquee-pill svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .marquee-pill:hover {
+            transform: translateY(-3px) scale(1.06);
+            background: rgba(26, 38, 64, 0.95);
+            border-color: rgba(0, 210, 255, 0.45);
+            box-shadow: 0 8px 24px rgba(0, 210, 255, 0.18);
+            color: #ffffff;
+        }
+
+        .marquee-pill:hover svg {
+            transform: scale(1.18);
+        }
+
+        @keyframes techMarqueeLoop {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════
            FEATURED PROJECTS SECTION
         ═══════════════════════════════════════════════ */
         .projects-section {
@@ -1711,6 +1816,279 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <!-- Tech Logo Infinite Marquee Ticker -->
+            <div class="tech-marquee-wrapper reveal">
+                <div class="tech-marquee-track">
+                    <!-- Group 1: All 26 Technologies -->
+                    <div class="tech-marquee-group">
+                        <!-- 1. HTML5 -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4.2 2h15.6l-1.4 16.1L12 21.8l-6.4-3.7L4.2 2z" fill="#E34F26"/><path d="M12 3.8v16.3l5.1-3 1.1-13.3H12z" fill="#EF652A"/><path d="M7.7 6.4h8.6l-.3 2.7H12v.1h-4l-.3-2.8zm.5 5.5h3.8v2.7H8.5l-.3-2.7zm3.8 5.6l-.1.1-2.9-.8-.2-2h-2l.3 3.6 4.9 1.4v-2.3zm0-8.4v-.1h4.2l-.4 3.7h-3.8v-3.6zm0 5.5v2.3l2.8-.8.3-2.9h-3.1v1.4z" fill="#FFF"/></svg>
+                            <span>HTML5</span>
+                        </div>
+                        <!-- 2. CSS3 -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4.2 2h15.6l-1.4 16.1L12 21.8l-6.4-3.7L4.2 2z" fill="#1572B6"/><path d="M12 3.8v16.3l5.1-3 1.1-13.3H12z" fill="#33A9DC"/><path d="M12 6.4H7.7l.2 2.7H12V6.4zm0 5.5H8.2l.2 2.7H12v-2.7zm0 5.7l-.1.1-2.9-.8-.2-2h-2l.3 3.6 4.9 1.4v-2.3zm4.4-11.2H12v2.7h4.1l-.3 2.8H12v2.7h3.5l-.5 4.8-3 .8v2.4l4.9-1.4.1-1.3.8-9.8.2-3.7z" fill="#FFF"/></svg>
+                            <span>CSS3</span>
+                        </div>
+                        <!-- 3. JavaScript -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#F7DF1E"/><path d="M7 16.8c.8.5 1.7.8 2.5.8 1.4 0 2.2-.7 2.2-2.1v-7.2h-2.1v7.2c0 .6-.3.9-.8.9-.4 0-.8-.1-1.1-.3l-.7 1.7zm7.5.3c1.1.6 2.3.9 3.5.9 2.5 0 3.9-1.3 3.9-3.2 0-1.8-1.2-2.6-2.9-3.3l-.8-.3c-1-.4-1.4-.7-1.4-1.4 0-.6.5-1.1 1.4-1.1.9 0 1.6.3 2.2.7l.8-1.8c-.8-.5-1.8-.8-2.9-.8-2.3 0-3.7 1.3-3.7 3.1 0 1.6 1 2.5 2.7 3.2l.8.3c1 .4 1.6.8 1.6 1.5 0 .8-.7 1.3-1.8 1.3-1 0-1.9-.4-2.6-.9l-.8 2z" fill="#000"/></svg>
+                            <span>JavaScript</span>
+                        </div>
+                        <!-- 4. TypeScript -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#3178C6"/><path d="M4 10.3h7.2v2.1H8.8v7.3H6.5v-7.3H4v-2.1zm8.3 7.6c1 .5 2.1.8 3.2.8 2.2 0 3.4-1.1 3.4-2.8 0-1.6-1.1-2.3-2.6-2.9l-.7-.3c-.9-.4-1.3-.7-1.3-1.3 0-.6.5-1 1.3-1 .8 0 1.5.3 2 .6l.7-1.8c-.7-.4-1.7-.7-2.7-.7-2.1 0-3.3 1.1-3.3 2.8 0 1.5.9 2.3 2.5 2.9l.7.3c.9.4 1.5.7 1.5 1.4 0 .7-.6 1.1-1.6 1.1-.9 0-1.7-.3-2.3-.8l-.8 1.7z" fill="#FFF"/></svg>
+                            <span>TypeScript</span>
+                        </div>
+                        <!-- 5. React -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.2" fill="#61DAFB"/><ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="#61DAFB" stroke-width="1.4" fill="none"/><ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="#61DAFB" stroke-width="1.4" fill="none" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="#61DAFB" stroke-width="1.4" fill="none" transform="rotate(120 12 12)"/></svg>
+                            <span>React</span>
+                        </div>
+                        <!-- 6. React Native -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2" fill="#61DAFB"/><ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.3" fill="none"/><ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.3" fill="none" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.3" fill="none" transform="rotate(120 12 12)"/><rect x="8.5" y="3.5" width="7" height="17" rx="1.5" stroke="#00d2ff" stroke-width="1.1" fill="none" stroke-opacity="0.45"/></svg>
+                            <span>React Native</span>
+                        </div>
+                        <!-- 7. Expo -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19.3 19.3L12 3.7 4.7 19.3h14.6z" stroke="#FFF" stroke-width="2" stroke-linejoin="round"/><path d="M10 14l2-4 2 4h-4z" fill="#FFF"/></svg>
+                            <span>Expo</span>
+                        </div>
+                        <!-- 8. Tailwind CSS -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#38BDF8"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.336 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z"/></svg>
+                            <span>Tailwind CSS</span>
+                        </div>
+                        <!-- 9. Next.js -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#000" stroke="#FFF" stroke-width="1.2"/><path d="M15.5 8v8M8.5 8v8l8.2-9" stroke="#FFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>Next.js</span>
+                        </div>
+                        <!-- 10. Node.js -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#5FA04E"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" fill="none" stroke="#5FA04E" stroke-width="1.8"/><path d="M12 5.5l5.2 3v6L12 17.5l-5.2-3v-6l5.2-3z" fill="#5FA04E"/></svg>
+                            <span>Node.js</span>
+                        </div>
+                        <!-- 11. Express.js -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><text x="2" y="16" font-family="'Inter',sans-serif" font-weight="800" font-size="13" fill="#a5b4fc" letter-spacing="-1">ex</text><circle cx="19" cy="8" r="2" fill="#00d2ff"/></svg>
+                            <span>Express.js</span>
+                        </div>
+                        <!-- 12. Python -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 1.5-5 3.5v2.5h5.2v.8H4.6C2.5 8.8 2 10.6 2 12.8c0 2.3.9 3.8 3.5 3.8h1.6v-2.3c0-2.3 2-4.2 4.3-4.2h5.1V7.5c0-2.2-2.3-5.5-4.6-5.5zm-1.8 1.8c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .4-1 1-1z" fill="#3776AB"/><path d="M12.1 22c3.1 0 5-1.5 5-3.5V16h-5.2v-.8h7.5c2.1 0 2.6-1.8 2.6-4 0-2.3-.9-3.8-3.5-3.8h-1.6v2.3c0 2.3-2 4.2-4.3 4.2H7.5v2.6c0 2.2 2.3 5.5 4.6 5.5zm1.8-1.8c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" fill="#FFD438"/></svg>
+                            <span>Python</span>
+                        </div>
+                        <!-- 13. FastAPI -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#009688"/><path d="M13 3L6 13h5l-1 8 8-11h-5l1-7z" fill="#FFF"/></svg>
+                            <span>FastAPI</span>
+                        </div>
+                        <!-- 14. REST APIs -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="8.7" y1="10.7" x2="15.3" y2="7.3"/><line x1="8.7" y1="13.3" x2="15.3" y2="16.7"/></svg>
+                            <span>REST APIs</span>
+                        </div>
+                        <!-- 15. GraphQL -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L20.66 7V17L12 22L3.34 17V7L12 2Z" stroke="#E10098" stroke-width="1.8"/><circle cx="12" cy="2" r="2" fill="#E10098"/><circle cx="20.66" cy="7" r="2" fill="#E10098"/><circle cx="20.66" cy="17" r="2" fill="#E10098"/><circle cx="12" cy="22" r="2" fill="#E10098"/><circle cx="3.34" cy="17" r="2" fill="#E10098"/><circle cx="3.34" cy="7" r="2" fill="#E10098"/><path d="M12 5.5l6.5 3.8v7.4L12 20.5l-6.5-3.8V9.3L12 5.5z" stroke="#E10098" stroke-width="1.2"/></svg>
+                            <span>GraphQL</span>
+                        </div>
+                        <!-- 16. PostgreSQL -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.8 6.4 9.2v-3.5c-.8.3-1.6.4-2.4.2-.6-.2-.9-.8-.7-1.4.2-.6.7-.9 1.3-.8.6.1 1.2 0 1.8-.2V12c-.9-1.2-1.4-2.7-1.4-4.3 0-3.2 2.2-5.7 5-5.7s5 2.5 5 5.7c0 1.6-.5 3.1-1.4 4.3v3.5c.6.2 1.2.3 1.8.2.6-.1 1.1.2 1.3.8.2.6-.1 1.2-.7 1.4-.8.2-1.6.1-2.4-.2v3.5C19.4 19.8 22 16.2 22 12c0-5.5-4.5-10-10-10z" fill="#336791"/></svg>
+                            <span>PostgreSQL</span>
+                        </div>
+                        <!-- 17. MySQL -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.8 3 11.5c0 3.3 2 6.2 5 7.5.5.2 1 .3 1.5.3 1.2 0 2.2-.6 2.8-1.5.6.9 1.6 1.5 2.8 1.5.5 0 1-.1 1.5-.3 3-1.3 5-4.2 5-7.5C21 6.8 17 3 12 3z" fill="#00758F"/><path d="M10 8c-1.5 1-2.5 2.5-2.5 4.5 0 1 .3 1.8.8 2.5h2.2c-.3-.7-.5-1.5-.5-2.5 0-1.8 1-3.2 2.5-4L10 8z" fill="#F29111"/></svg>
+                            <span>MySQL</span>
+                        </div>
+                        <!-- 18. MongoDB -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C11.5 3.8 6 9.8 6 14.5c0 3.3 2.7 6 6 6s6-2.7 6-6C18 9.8 12.5 3.8 12 2z" fill="#47A248"/><path d="M12 3v17.3c-.2 0-5.8-3-5.8-5.8 0-4.4 5.3-10.2 5.8-11.5z" fill="#4CAF50"/></svg>
+                            <span>MongoDB</span>
+                        </div>
+                        <!-- 19. Firebase -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4.5 17.5L7.2 4.2c.1-.4.6-.5.8-.2l3.4 6.3-6.9 7.2z" fill="#FFA000"/><path d="M13.2 8.6L11.4 5.2c-.2-.4-.8-.4-1 0L4.5 17.5l8.7-8.9z" fill="#F57C00"/><path d="M12 14.5l-3.2 6.1c-.2.4.1.9.6.9h9.2c.4 0 .7-.3.8-.7L12 14.5z" fill="#FFCA28"/><path d="M4.5 17.5L8.8 21.5c.3.3.8.3 1.1 0l9.6-9.6L4.5 17.5z" fill="#FF8F00"/></svg>
+                            <span>Firebase</span>
+                        </div>
+                        <!-- 20. Supabase -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13.5 2.5L3.8 14.2c-.5.6 0 1.5.8 1.5H12l-1.5 6.8c-.3 1.2 1.4 1.8 2.1.8l9.7-11.7c.5-.6 0-1.5-.8-1.5H13.5l1.5-6.8c.3-1.2-1.4-1.8-2.1-.8z" fill="#3ECF8E"/></svg>
+                            <span>Supabase</span>
+                        </div>
+                        <!-- 21. Vercel -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFF"><path d="M12 2L23 21H1L12 2z"/></svg>
+                            <span>Vercel</span>
+                        </div>
+                        <!-- 22. Git -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21.5 10.7l-8.2-8.2c-.7-.7-1.9-.7-2.6 0L8.4 4.8l3.3 3.3c.8-.3 1.7-.1 2.3.5.6.6.8 1.5.5 2.3l3.2 3.2c.8-.3 1.7-.1 2.3.5.9.9.9 2.4 0 3.3-.9.9-2.4.9-3.3 0-.7-.7-.9-1.7-.5-2.6l-3-3v4.9c.4.3.7.8.7 1.4 0 1-.8 1.8-1.8 1.8s-1.8-.8-1.8-1.8c0-.6.3-1.1.7-1.4V9.8c-.4-.3-.7-.8-.7-1.4 0-.7.4-1.4 1-1.7L8.4 3.4 2.5 9.3c-.7.7-.7 1.9 0 2.6l8.2 8.2c.7.7 1.9.7 2.6 0l8.2-8.2c.7-.6.7-1.8 0-2.5z" fill="#F05032"/></svg>
+                            <span>Git</span>
+                        </div>
+                        <!-- 23. GitHub -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFF"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                            <span>GitHub</span>
+                        </div>
+                        <!-- 24. VS Code -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17.5 2.5l-9 8.2-4.5-3.5L2 8.3v7.4l2 1.1 4.5-3.5 9 8.2 4.5-2.2V4.7l-4.5-2.2z" fill="#007ACC"/><path d="M17.5 2.5L8.5 10.7l9 8.2 4.5-2.2V4.7l-4.5-2.2z" fill="#1F9CF0"/><path d="M17.5 18.9V5.1l-6 6.9 6 6.9z" fill="#0065A9"/></svg>
+                            <span>VS Code</span>
+                        </div>
+                        <!-- 25. Postman -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FF6C37"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5l-4-3 4-3v2h4v2h-4v2z"/></svg>
+                            <span>Postman</span>
+                        </div>
+                        <!-- 26. Docker -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#2496ED"><path d="M13 8.5h-1.8V6.7H13v1.8zm2.4 0h-1.8V6.7h1.8v1.8zm-4.8 0H8.8V6.7h1.8v1.8zm7.2 0H16V6.7h1.8v1.8zm-7.2 2.4H8.8V9.1h1.8v1.8zm2.4 0h-1.8V9.1H13v1.8zm2.4 0h-1.8V9.1h1.8v1.8zm2.4 0H16V9.1h1.8v1.8zm2.4-1.8h-1.8V7.3c1.5.3 2.7 1.2 3.4 2.4-.5-.4-1-.6-1.6-.6zM22 12.5c-.3 0-1.4.2-2.1.8-.7-.4-1.8-.5-2.6-.2-1.3-.9-3.2-.8-4.5 0-.4-.3-1.1-.5-1.8-.5-.8 0-1.6.2-2.2.6-.5-.3-1.2-.5-1.9-.5-1 0-1.9.4-2.5 1-.4.4-.7.9-.8 1.4-1.1.2-2.1.8-2.6 1.7C.5 17.6 1.1 19 2.5 19.6c2.8 1.2 8.3 1.4 12.3.2 4.1-1.2 6.8-4.4 7.2-7.3z"/></svg>
+                            <span>Docker</span>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: Duplicate for Seamless Continuous Loop -->
+                    <div class="tech-marquee-group" aria-hidden="true">
+                        <!-- 1. HTML5 -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4.2 2h15.6l-1.4 16.1L12 21.8l-6.4-3.7L4.2 2z" fill="#E34F26"/><path d="M12 3.8v16.3l5.1-3 1.1-13.3H12z" fill="#EF652A"/><path d="M7.7 6.4h8.6l-.3 2.7H12v.1h-4l-.3-2.8zm.5 5.5h3.8v2.7H8.5l-.3-2.7zm3.8 5.6l-.1.1-2.9-.8-.2-2h-2l.3 3.6 4.9 1.4v-2.3zm0-8.4v-.1h4.2l-.4 3.7h-3.8v-3.6zm0 5.5v2.3l2.8-.8.3-2.9h-3.1v1.4z" fill="#FFF"/></svg>
+                            <span>HTML5</span>
+                        </div>
+                        <!-- 2. CSS3 -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4.2 2h15.6l-1.4 16.1L12 21.8l-6.4-3.7L4.2 2z" fill="#1572B6"/><path d="M12 3.8v16.3l5.1-3 1.1-13.3H12z" fill="#33A9DC"/><path d="M12 6.4H7.7l.2 2.7H12V6.4zm0 5.5H8.2l.2 2.7H12v-2.7zm0 5.7l-.1.1-2.9-.8-.2-2h-2l.3 3.6 4.9 1.4v-2.3zm4.4-11.2H12v2.7h4.1l-.3 2.8H12v2.7h3.5l-.5 4.8-3 .8v2.4l4.9-1.4.1-1.3.8-9.8.2-3.7z" fill="#FFF"/></svg>
+                            <span>CSS3</span>
+                        </div>
+                        <!-- 3. JavaScript -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#F7DF1E"/><path d="M7 16.8c.8.5 1.7.8 2.5.8 1.4 0 2.2-.7 2.2-2.1v-7.2h-2.1v7.2c0 .6-.3.9-.8.9-.4 0-.8-.1-1.1-.3l-.7 1.7zm7.5.3c1.1.6 2.3.9 3.5.9 2.5 0 3.9-1.3 3.9-3.2 0-1.8-1.2-2.6-2.9-3.3l-.8-.3c-1-.4-1.4-.7-1.4-1.4 0-.6.5-1.1 1.4-1.1.9 0 1.6.3 2.2.7l.8-1.8c-.8-.5-1.8-.8-2.9-.8-2.3 0-3.7 1.3-3.7 3.1 0 1.6 1 2.5 2.7 3.2l.8.3c1 .4 1.6.8 1.6 1.5 0 .8-.7 1.3-1.8 1.3-1 0-1.9-.4-2.6-.9l-.8 2z" fill="#000"/></svg>
+                            <span>JavaScript</span>
+                        </div>
+                        <!-- 4. TypeScript -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#3178C6"/><path d="M4 10.3h7.2v2.1H8.8v7.3H6.5v-7.3H4v-2.1zm8.3 7.6c1 .5 2.1.8 3.2.8 2.2 0 3.4-1.1 3.4-2.8 0-1.6-1.1-2.3-2.6-2.9l-.7-.3c-.9-.4-1.3-.7-1.3-1.3 0-.6.5-1 1.3-1 .8 0 1.5.3 2 .6l.7-1.8c-.7-.4-1.7-.7-2.7-.7-2.1 0-3.3 1.1-3.3 2.8 0 1.5.9 2.3 2.5 2.9l.7.3c.9.4 1.5.7 1.5 1.4 0 .7-.6 1.1-1.6 1.1-.9 0-1.7-.3-2.3-.8l-.8 1.7z" fill="#FFF"/></svg>
+                            <span>TypeScript</span>
+                        </div>
+                        <!-- 5. React -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.2" fill="#61DAFB"/><ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="#61DAFB" stroke-width="1.4" fill="none"/><ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="#61DAFB" stroke-width="1.4" fill="none" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="#61DAFB" stroke-width="1.4" fill="none" transform="rotate(120 12 12)"/></svg>
+                            <span>React</span>
+                        </div>
+                        <!-- 6. React Native -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2" fill="#61DAFB"/><ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.3" fill="none"/><ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.3" fill="none" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="3.5" stroke="#61DAFB" stroke-width="1.3" fill="none" transform="rotate(120 12 12)"/><rect x="8.5" y="3.5" width="7" height="17" rx="1.5" stroke="#00d2ff" stroke-width="1.1" fill="none" stroke-opacity="0.45"/></svg>
+                            <span>React Native</span>
+                        </div>
+                        <!-- 7. Expo -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19.3 19.3L12 3.7 4.7 19.3h14.6z" stroke="#FFF" stroke-width="2" stroke-linejoin="round"/><path d="M10 14l2-4 2 4h-4z" fill="#FFF"/></svg>
+                            <span>Expo</span>
+                        </div>
+                        <!-- 8. Tailwind CSS -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#38BDF8"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.336 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z"/></svg>
+                            <span>Tailwind CSS</span>
+                        </div>
+                        <!-- 9. Next.js -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#000" stroke="#FFF" stroke-width="1.2"/><path d="M15.5 8v8M8.5 8v8l8.2-9" stroke="#FFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>Next.js</span>
+                        </div>
+                        <!-- 10. Node.js -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#5FA04E"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7L12 2z" fill="none" stroke="#5FA04E" stroke-width="1.8"/><path d="M12 5.5l5.2 3v6L12 17.5l-5.2-3v-6l5.2-3z" fill="#5FA04E"/></svg>
+                            <span>Node.js</span>
+                        </div>
+                        <!-- 11. Express.js -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><text x="2" y="16" font-family="'Inter',sans-serif" font-weight="800" font-size="13" fill="#a5b4fc" letter-spacing="-1">ex</text><circle cx="19" cy="8" r="2" fill="#00d2ff"/></svg>
+                            <span>Express.js</span>
+                        </div>
+                        <!-- 12. Python -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M11.9 2c-3.1 0-5 1.5-5 3.5v2.5h5.2v.8H4.6C2.5 8.8 2 10.6 2 12.8c0 2.3.9 3.8 3.5 3.8h1.6v-2.3c0-2.3 2-4.2 4.3-4.2h5.1V7.5c0-2.2-2.3-5.5-4.6-5.5zm-1.8 1.8c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1 .4-1 1-1z" fill="#3776AB"/><path d="M12.1 22c3.1 0 5-1.5 5-3.5V16h-5.2v-.8h7.5c2.1 0 2.6-1.8 2.6-4 0-2.3-.9-3.8-3.5-3.8h-1.6v2.3c0 2.3-2 4.2-4.3 4.2H7.5v2.6c0 2.2 2.3 5.5 4.6 5.5zm1.8-1.8c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" fill="#FFD438"/></svg>
+                            <span>Python</span>
+                        </div>
+                        <!-- 13. FastAPI -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#009688"/><path d="M13 3L6 13h5l-1 8 8-11h-5l1-7z" fill="#FFF"/></svg>
+                            <span>FastAPI</span>
+                        </div>
+                        <!-- 14. REST APIs -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="8.7" y1="10.7" x2="15.3" y2="7.3"/><line x1="8.7" y1="13.3" x2="15.3" y2="16.7"/></svg>
+                            <span>REST APIs</span>
+                        </div>
+                        <!-- 15. GraphQL -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L20.66 7V17L12 22L3.34 17V7L12 2Z" stroke="#E10098" stroke-width="1.8"/><circle cx="12" cy="2" r="2" fill="#E10098"/><circle cx="20.66" cy="7" r="2" fill="#E10098"/><circle cx="20.66" cy="17" r="2" fill="#E10098"/><circle cx="12" cy="22" r="2" fill="#E10098"/><circle cx="3.34" cy="17" r="2" fill="#E10098"/><circle cx="3.34" cy="7" r="2" fill="#E10098"/><path d="M12 5.5l6.5 3.8v7.4L12 20.5l-6.5-3.8V9.3L12 5.5z" stroke="#E10098" stroke-width="1.2"/></svg>
+                            <span>GraphQL</span>
+                        </div>
+                        <!-- 16. PostgreSQL -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.8 6.4 9.2v-3.5c-.8.3-1.6.4-2.4.2-.6-.2-.9-.8-.7-1.4.2-.6.7-.9 1.3-.8.6.1 1.2 0 1.8-.2V12c-.9-1.2-1.4-2.7-1.4-4.3 0-3.2 2.2-5.7 5-5.7s5 2.5 5 5.7c0 1.6-.5 3.1-1.4 4.3v3.5c.6.2 1.2.3 1.8.2.6-.1 1.1.2 1.3.8.2.6-.1 1.2-.7 1.4-.8.2-1.6.1-2.4-.2v3.5C19.4 19.8 22 16.2 22 12c0-5.5-4.5-10-10-10z" fill="#336791"/></svg>
+                            <span>PostgreSQL</span>
+                        </div>
+                        <!-- 17. MySQL -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 6.8 3 11.5c0 3.3 2 6.2 5 7.5.5.2 1 .3 1.5.3 1.2 0 2.2-.6 2.8-1.5.6.9 1.6 1.5 2.8 1.5.5 0 1-.1 1.5-.3 3-1.3 5-4.2 5-7.5C21 6.8 17 3 12 3z" fill="#00758F"/><path d="M10 8c-1.5 1-2.5 2.5-2.5 4.5 0 1 .3 1.8.8 2.5h2.2c-.3-.7-.5-1.5-.5-2.5 0-1.8 1-3.2 2.5-4L10 8z" fill="#F29111"/></svg>
+                            <span>MySQL</span>
+                        </div>
+                        <!-- 18. MongoDB -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C11.5 3.8 6 9.8 6 14.5c0 3.3 2.7 6 6 6s6-2.7 6-6C18 9.8 12.5 3.8 12 2z" fill="#47A248"/><path d="M12 3v17.3c-.2 0-5.8-3-5.8-5.8 0-4.4 5.3-10.2 5.8-11.5z" fill="#4CAF50"/></svg>
+                            <span>MongoDB</span>
+                        </div>
+                        <!-- 19. Firebase -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4.5 17.5L7.2 4.2c.1-.4.6-.5.8-.2l3.4 6.3-6.9 7.2z" fill="#FFA000"/><path d="M13.2 8.6L11.4 5.2c-.2-.4-.8-.4-1 0L4.5 17.5l8.7-8.9z" fill="#F57C00"/><path d="M12 14.5l-3.2 6.1c-.2.4.1.9.6.9h9.2c.4 0 .7-.3.8-.7L12 14.5z" fill="#FFCA28"/><path d="M4.5 17.5L8.8 21.5c.3.3.8.3 1.1 0l9.6-9.6L4.5 17.5z" fill="#FF8F00"/></svg>
+                            <span>Firebase</span>
+                        </div>
+                        <!-- 20. Supabase -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13.5 2.5L3.8 14.2c-.5.6 0 1.5.8 1.5H12l-1.5 6.8c-.3 1.2 1.4 1.8 2.1.8l9.7-11.7c.5-.6 0-1.5-.8-1.5H13.5l1.5-6.8c.3-1.2-1.4-1.8-2.1-.8z" fill="#3ECF8E"/></svg>
+                            <span>Supabase</span>
+                        </div>
+                        <!-- 21. Vercel -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFF"><path d="M12 2L23 21H1L12 2z"/></svg>
+                            <span>Vercel</span>
+                        </div>
+                        <!-- 22. Git -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21.5 10.7l-8.2-8.2c-.7-.7-1.9-.7-2.6 0L8.4 4.8l3.3 3.3c.8-.3 1.7-.1 2.3.5.6.6.8 1.5.5 2.3l3.2 3.2c.8-.3 1.7-.1 2.3.5.9.9.9 2.4 0 3.3-.9.9-2.4.9-3.3 0-.7-.7-.9-1.7-.5-2.6l-3-3v4.9c.4.3.7.8.7 1.4 0 1-.8 1.8-1.8 1.8s-1.8-.8-1.8-1.8c0-.6.3-1.1.7-1.4V9.8c-.4-.3-.7-.8-.7-1.4 0-.7.4-1.4 1-1.7L8.4 3.4 2.5 9.3c-.7.7-.7 1.9 0 2.6l8.2 8.2c.7.7 1.9.7 2.6 0l8.2-8.2c.7-.6.7-1.8 0-2.5z" fill="#F05032"/></svg>
+                            <span>Git</span>
+                        </div>
+                        <!-- 23. GitHub -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFF"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                            <span>GitHub</span>
+                        </div>
+                        <!-- 24. VS Code -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M17.5 2.5l-9 8.2-4.5-3.5L2 8.3v7.4l2 1.1 4.5-3.5 9 8.2 4.5-2.2V4.7l-4.5-2.2z" fill="#007ACC"/><path d="M17.5 2.5L8.5 10.7l9 8.2 4.5-2.2V4.7l-4.5-2.2z" fill="#1F9CF0"/><path d="M17.5 18.9V5.1l-6 6.9 6 6.9z" fill="#0065A9"/></svg>
+                            <span>VS Code</span>
+                        </div>
+                        <!-- 25. Postman -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#FF6C37"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5l-4-3 4-3v2h4v2h-4v2z"/></svg>
+                            <span>Postman</span>
+                        </div>
+                        <!-- 26. Docker -->
+                        <div class="marquee-pill">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#2496ED"><path d="M13 8.5h-1.8V6.7H13v1.8zm2.4 0h-1.8V6.7h1.8v1.8zm-4.8 0H8.8V6.7h1.8v1.8zm7.2 0H16V6.7h1.8v1.8zm-7.2 2.4H8.8V9.1h1.8v1.8zm2.4 0h-1.8V9.1H13v1.8zm2.4 0h-1.8V9.1h1.8v1.8zm2.4 0H16V9.1h1.8v1.8zm2.4-1.8h-1.8V7.3c1.5.3 2.7 1.2 3.4 2.4-.5-.4-1-.6-1.6-.6zM22 12.5c-.3 0-1.4.2-2.1.8-.7-.4-1.8-.5-2.6-.2-1.3-.9-3.2-.8-4.5 0-.4-.3-1.1-.5-1.8-.5-.8 0-1.6.2-2.2.6-.5-.3-1.2-.5-1.9-.5-1 0-1.9.4-2.5 1-.4.4-.7.9-.8 1.4-1.1.2-2.1.8-2.6 1.7C.5 17.6 1.1 19 2.5 19.6c2.8 1.2 8.3 1.4 12.3.2 4.1-1.2 6.8-4.4 7.2-7.3z"/></svg>
+                            <span>Docker</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
